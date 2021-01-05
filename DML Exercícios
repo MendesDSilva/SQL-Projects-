@@ -1,0 +1,451 @@
+
+--=================================
+/* RELATORIO GERAL DOS CLIENTES */
+--=================================
+
++-----------+---------+------+-------------------+-----------+
+| IDCLIENTE | NOME    | SEXO | EMAIL             | CPF       |
++-----------+---------+------+-------------------+-----------+
+|         1 | FLAVIO  | M    | FLAVIO@IG.COM     | 4657765   |
+|         2 | ANDRE   | M    | ANDRE@GLOBO.COM   | 7687567   |
+|         3 | GIOVANA | F    | NULL              | 0876655   |
+|         4 | KARLA   | M    | KARLA@GMAIL.COM   | 545676778 |
+|         5 | DANIELE | M    | DANIELE@GMAIL.COM | 43536789  |
+|         6 | LORENA  | M    | NULL              | 774557887 |
+|         7 | EDUARDO | M    | NULL              | 54376457  |
+|         8 | ANTONIO | F    | ANTONIO@IG.COM    | 12436767  |
+|         9 | ANTONIO | M    | ANTONIO@UOL.COM   | 3423565   |
+|        10 | ELAINE  | M    | ELAINE@GLOBO.COM  | 32567763  |
+|        11 | CARMEM  | M    | CARMEM@IG.COM     | 787832213 |
+|        12 | ADRIANA | F    | ADRIANA@GMAIL.COM | 88556942  |
+|        13 | JOICE   | F    | JOICE@GMAIL.COM   | 55412256  |
++-----------+---------+------+-------------------+-----------+
+
+ -- Alterando sexo da Karla
+
+UPDATE CLIENTE
+SET SEXO  = 'F'
+WHERE IDCLIENTE = 4;
+
+-- Alterando sexo da Daniele
+
+UPDATE CLIENTE
+SET SEXO = 'F'
+WHERE IDCLIENTE = 5;
+
+-- Alterando sexo da Lorena
+
+UPDATE CLIENTE
+SET SEXO = 'F'
+WHERE IDCLIENTE = 6;
+
+-- Alterando sexo da Elaine
+
+UPDATE CLIENTE
+SET SEXO = 'F'
+WHERE IDCLIENTE = 10;
+
+-- Alterando sexo da Carmem
+
+UPDATE CLIENTE
+SET SEXO = 'F'
+WHERE IDCLIENTE = 11;
+
+-- Alterando sexo do Antonio
+
+UPDATE CLIENTE 
+SET SEXO = 'M'
+WHERE IDCLIENTE = 9;
+
+-- Alterando sexo do Antonio 8
+
+UPDATE CLIENTE 
+SET SEXO = 'M'
+WHERE IDCLIENTE = 8;
+
++-----------+---------+------+-------------------+-----------+
+| IDCLIENTE | NOME    | SEXO | EMAIL             | CPF       |
++-----------+---------+------+-------------------+-----------+
+|         1 | FLAVIO  | M    | FLAVIO@IG.COM     | 4657765   |
+|         2 | ANDRE   | M    | ANDRE@GLOBO.COM   | 7687567   |
+|         3 | GIOVANA | F    | NULL              | 0876655   |
+|         4 | KARLA   | F    | KARLA@GMAIL.COM   | 545676778 |
+|         5 | DANIELE | F    | DANIELE@GMAIL.COM | 43536789  |
+|         6 | LORENA  | F    | NULL              | 774557887 |
+|         7 | EDUARDO | M    | NULL              | 54376457  |
+|         8 | ANTONIO | M    | ANTONIO@IG.COM    | 12436767  |
+|         9 | ANTONIO | M    | ANTONIO@UOL.COM   | 3423565   |
+|        10 | ELAINE  | F    | ELAINE@GLOBO.COM  | 32567763  |
+|        11 | CARMEM  | F    | CARMEM@IG.COM     | 787832213 |
+|        12 | ADRIANA | F    | ADRIANA@GMAIL.COM | 88556942  |
+|        13 | JOICE   | F    | JOICE@GMAIL.COM   | 55412256  |
++-----------+---------+------+-------------------+-----------+
+
++------------+--------------------+------------+----------------+--------+------------+
+| IDENDERECO | RUA                | BAIRRO     | CIDADE         | ESTADO | ID_CLIENTE |
++------------+--------------------+------------+----------------+--------+------------+
+|          1 | RUA GUEDES         | CASCADURA  | B. HORIZONTE   | MG     |          1 |
+|          2 | RUA MAIA LACERDA   | ESTACIO    | RIO DE JANEIRO | RJ     |          2 |
+|          3 | RUA VISCONDESSA    | CENTRO     | RIO DE JANEIRO | RJ     |          3 |
+|          4 | RUA NELSON MANDELA | COPACABANA | RIO DE JANEIRO | RJ     |          4 |
+|          5 | RUA ARAUJO LIMA    | CENTRO     | VITORIA        | ES     |          5 |
+|          6 | RUA CASTRO ALVES   | LEBLON     | RIO DE JANEIRO | RJ     |          6 |
+|          7 | AV CAPITAO ANTUNES | CENTRO     | CURITIBA       | PR     |          7 |
+|          8 | AV CARLOS BARROSO  | JARDINS    | SAO PAULO      | SP     |          8 |
+|          9 | ALAMEDA SAMPAIO    | BOM RETIRO | CURITIBA       | PR     |          9 |
+|         10 | RUA DA LAPA        | LAPA       | SAO PAULO      | SP     |         10 |
+|         11 | RUA GERONIMO       | CENTRO     | RIO DE JANEIRO | RJ     |         11 |
+|         12 | RUA GOMES FREIRE   | CENTRO     | RIO DE JANEIRO | RJ     |         12 |
++------------+--------------------+------------+----------------+--------+------------+
+
++------------+------+----------+------------+
+| IDTELEFONE | TIPO | NUMERO   | ID_CLIENTE |
++------------+------+----------+------------+
+|          1 | RES  | 68976565 |          1 |
+|          2 | CEL  | 99656675 |          1 |
+|          3 | CEL  | 33567765 |          2 |
+|          4 | CEL  | 88668786 |          2 |
+|          5 | COM  | 55689654 |          2 |
+|          6 | COM  | 88687979 |          3 |
+|          7 | COM  | 88965676 |          4 |
+|          8 | CEL  | 89966809 |          5 |
+|          9 | COM  | 88679978 |          6 |
+|         10 | CEL  | 99655768 |          7 |
+|         11 | RES  | 89955665 |          8 |
+|         12 | RES  | 77455786 |          9 |
+|         13 | RES  | 89766554 |          9 |
+|         14 | RES  | 77755785 |         10 |
++------------+------+----------+------------+
+--=========================================================--
+                  /* RELATORIO DE MULHERES */
+--=========================================================--
+
+SELECT CLIENTE.NOME, CLIENTE.SEXO, 
+       IFNULL(CLIENTE.EMAIL,'NA') AS EMAIL, 
+       CLIENTE.CPF,
+       ENDERECO.RUA, ENDERECO.BAIRRO, ENDERECO.CIDADE, ENDERECO.ESTADO,
+       TELEFONE.TIPO, TELEFONE.NUMERO
+
+FROM CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+WHERE SEXO = 'F';
+
+
+--=========================================================--
+                  /* VIEW RELATORIO DE MULHERES */
+--=========================================================--
+
+CREATE VIEW RELATORIO_MULHERES AS 
+
+SELECT CLIENTE.NOME, CLIENTE.SEXO,
+       IFNULL(CLIENTE.EMAIL,'NA') AS EMAIL, CLIENTE.CPF,
+       ENDERECO.RUA, ENDERECO.BAIRRO, ENDERECO.CIDADE, ENDERECO.ESTADO,
+       TELEFONE.TIPO, TELEFONE.NUMERO
+
+FROM CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+WHERE SEXO = 'F';
+
+SELECT * FROM RELATORIO_MULHERES ;
+
+
++---------+------+-------------------+-----------+--------------------+------------+----------------+--------+------+----------+
+| NOME    | SEXO | EMAIL             | CPF       | RUA                | BAIRRO     | CIDADE         | ESTADO | TIPO | NUMERO   |
++---------+------+-------------------+-----------+--------------------+------------+----------------+--------+------+----------+
+| GIOVANA | F    | NA                | 0876655   | RUA VISCONDESSA    | CENTRO     | RIO DE JANEIRO | RJ     | COM  | 88687979 |
+| KARLA   | F    | KARLA@GMAIL.COM   | 545676778 | RUA NELSON MANDELA | COPACABANA | RIO DE JANEIRO | RJ     | COM  | 88965676 |
+| DANIELE | F    | DANIELE@GMAIL.COM | 43536789  | RUA ARAUJO LIMA    | CENTRO     | VITORIA        | ES     | CEL  | 89966809 |
+| LORENA  | F    | NA                | 774557887 | RUA CASTRO ALVES   | LEBLON     | RIO DE JANEIRO | RJ     | COM  | 88679978 |
+| ELAINE  | F    | ELAINE@GLOBO.COM  | 32567763  | RUA DA LAPA        | LAPA       | SAO PAULO      | SP     | RES  | 77755785 |
++---------+------+-------------------+-----------+--------------------+------------+----------------+--------+------+----------+
+
+--=========================================================--
+             /* QUANTIDADE DE HOMENS E MULHERES */
+--=========================================================--
+
+SELECT SEXO, COUNT(*) AS QUANTIDADE 
+FROM CLIENTE 
+GROUP BY SEXO  ; 
+
++------+------------+
+| SEXO | QUANTIDADE |
++------+------------+
+| M    |          5 |
+| F    |          8 |
++------+------------+
+
+
+CREATE VIEW RELATORIO_POR_SEXO AS 
+
+SELECT SEXO, COUNT(*) AS QUANTIDADE 
+FROM CLIENTE
+GROUP BY SEXO; 
+
+
+
+--=======================================================================================--
+/* IDS E EMAIL DAS MULHERES QUE MOREM NO CENTRO DO RIO DE JANEIRO E NAO TENHAM CELULAR */
+--=======================================================================================--
+
+SELECT CLIENTE.IDCLIENTE,
+       IFNULL(CLIENTE.EMAIL,'NA') AS EMAIL,
+       ENDERECO.CIDADE, ENDERECO.BAIRRO,
+       TELEFONE.TIPO
+
+FROM CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+WHERE SEXO = 'F' AND CIDADE = 'RIO DE JANEIRO' AND BAIRRO = 'CENTRO' AND (TIPO = 'COM' OR TIPO = 'RES');
+
+
+CREATE VIEW MULHERES_CENTRO_RIO_NOCEL AS 
+
+
+SELECT CLIENTE.IDCLIENTE,
+       IFNULL(CLIENTE.EMAIL,'NA') AS EMAIL,
+       ENDERECO.CIDADE, ENDERECO.BAIRRO,
+       TELEFONE.TIPO
+
+FROM CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+WHERE SEXO = 'F' AND CIDADE = 'RIO DE JANEIRO' AND BAIRRO = 'CENTRO' AND (TIPO = 'COM' OR TIPO = 'RES');
+
+
+SELECT * FROM MULHERES_CENTRO_RIO_NOCEL;
+
+
+/* PARA UMA CAMPANHA DE MARKETING, O SETOR SOLICITOU UM 
+RELATÓRIO COM NOME, EMAIL E TELEFONE CELULAR DOS CLIENTES
+QUE MORAM NO ESTADO DO RIO DE JANEIRO, VOCE TERÁ QUE PASSAR
+A QUERY PARA GERAR O RELATÓRIO PARA O PROGRAMADOR */
+
+
+SELECT CLIENTE.NOME, CLIENTE.EMAIL, 
+	   TELEFONE.NUMERO,
+	   ENDERECO.ESTADO
+
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+WHERE ESTADO = 'RJ';
+
+--====================== VIEW =========================--
+/* PARA UMA CAMPANHA DE MARKETING, O SETOR SOLICITOU UM 
+RELATÓRIO COM NOME, EMAIL E TELEFONE CELULAR DOS CLIENTES
+QUE MORAM NO ESTADO DO RIO DE JANEIRO, VOCE TERÁ QUE PASSAR
+A QUERY PARA GERAR O RELATÓRIO PARA O PROGRAMADOR */
+--=====================================================--
+
+CREATE VIEW CHAMA_CRITERIO01 AS 
+
+SELECT CLIENTE.NOME, CLIENTE.EMAIL, 
+	   TELEFONE.NUMERO,
+	   ENDERECO.ESTADO
+
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+WHERE ESTADO = 'RJ';
+
+SELECT * FROM CHAMA_CRITERIO01;
+
+--===============================================================--
+/* PARA UMA CAMPANHA DE PRODUTOS DE BELEZA, O COMERCIAL SOLICTIOU UM
+REALTÓRIO COM O NOME, EMAIL E TELEFONE CELULAR DAS MULHERES QUE 
+MORAM NO ESTADO DE SÃO PAULO */
+
+-- VIEW CRITERIO01 
+--===============================================================--
+
+SELECT CLIENTE.NOME, 
+       IFNULL(CLIENTE.EMAIL, 'NA') AS EMAIL,
+       TELEFONE.NUMERO,TELEFONE.TIPO,
+       ENDERECO.ESTADO
+
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+
+WHERE TIPO = 'CEL' AND SEXO = 'F' AND ESTADO = 'SP';
+
+--============================ VIEW ================================--
+/* PARA UMA CAMPANHA DE PRODUTOS DE BELEZA, O COMERCIAL SOLICTIOU UM
+REALTÓRIO COM O NOME, EMAIL E TELEFONE CELULAR DAS MULHERES QUE 
+MORAM NO ESTADO DE SÃO PAULO */
+
+-- VIEW CRIERIO02 SELECT * FROM CRITERIO02 
+--==================================================================--
+
+CREATE VIEW CRITERIO02 AS 
+
+SELECT CLIENTE.NOME, 
+       IFNULL(CLIENTE.EMAIL, 'NA') AS EMAIL,
+       TELEFONE.NUMERO,TELEFONE.TIPO,
+       ENDERECO.ESTADO
+
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+
+WHERE TIPO = 'CEL' AND SEXO = 'F' AND ESTADO = 'SP';
+
+SELECT * FROM CRITERIO02 ; 
+
+--===========================================--
+
+
+                              ---- ALTER TABLE ---
+
+                              ----   CHANGE ---
+
+
+CREATE TABLE PRODUTO (
+
+	IDPRODUTO INT PRIMARY KEY AUTO_INCREMENT,
+	NOME_PRODUTO VARCHAR(30) NOT NULL,
+	PRECO INT,
+	FRETE FLOAT(10,2) NOT NULL
+);
+
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| IDPRODUTO    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| NOME_PRODUTO | varchar(30) | NO   |     | NULL    |                |
+| PRECO        | int(11)     | NO   |     | NULL    |                |
+| FRETE        | float(10,2) | NO   |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+
+/* ALTERANDO NOME DE UMA COLUNA - ALTER TABLE CHANGE */
+
+
+ALTER TABLE PRODUTO
+CHANGE PRECO VALOR_UNITARIO INT NOT NULL;
+
++----------------+-------------+------+-----+---------+----------------+
+| Field          | Type        | Null | Key | Default | Extra          |
++----------------+-------------+------+-----+---------+----------------+
+| IDPRODUTO      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| NOME_PRODUTO   | varchar(30) | NO   |     | NULL    |                |
+| VALOR_UNITARIO | int(11)     | NO   |     | NULL    |                |
+| FRETE          | float(10,2) | NO   |     | NULL    |                |
++----------------+-------------+------+-----+---------+----------------+
+
+
+ALTER TABLE PRODUTO 
+CHANGE VALOR_UNITARIO PRECO INT NOT NULL;
+
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| IDPRODUTO    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| NOME_PRODUTO | varchar(30) | NO   |     | NULL    |                |
+| PRECO        | int(11)     | NO   |     | NULL    |                |
+| FRETE        | float(10,2) | NO   |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+
+ALTER TABLE PRODUTO 
+CHANGE VALOR_UNITARIO PRECO_UNITARIO INT NOT NULL;
+
+
+
+ALTER TABLE PRODUTO 
+CHANGE VALOR_UNITARIO PRECO_UNITARIO INT NOT NULL;
+
+                            ---- ALTER TABLE ---
+
+                              ----   CHANGE ---
+
+
+/* ALTERANDO NOME DE UMA COLUNA - CHANGE */
+
+ALTER TABLE PRODUTO 
+CHANGE PRECO VALOR_UNITARIO INT NOT NULL;
+
+
+ALTER TABLE PRODUTO 
+CHANGE VALOR_UNITARIO PRECO_UNITARIO INT;
+
+
+
+/* ALTERANDO NOME DE UMA COLUNA - ALTER TABLE-TABELA + MODIFY */
+
+ ALTER TABLE PRODUTO 
+ MODIFY PRECO_UNITARIO VARCHAR(50) NOT NULL; 
+
+/* ADICIONANDO UMA COLUNA */
+
+ALTER TABLE PRODUTO
+ADD PESO FLOAT(10,2) NOT NULL; 
+
+/* APAGANDO UMA COLUNA */ 
+
+ALTER TABLE PRODUTO 
+DROP COLUMN PESO  ;
+
+/* ADICIONANDO AS COLUNAS EM ORDENS EXPECÍFICAS */
+
+
+ALTER TABLE PRODUTO 
+ADD COLUMN PESO FLOAT(10,2) NOT NULL
+AFTER NOME_PRODUTO; /* ADICIONANDO DEPOIS DO NOME_PRODUTO */
+
+
+ALTER TABLE PRODUTO 
+ADD COLUMN PESO FLOAT(10,2) NOT NULL
+FIRST;  /* ADICIONANDO A TABELA PESO COMO 1º COLUNA */
+
+ALTER TABLE PRODUTO
+DROP COLUMN PESO ;
+
+
+ALTER TABLE PRODUTO 
+DROP COLUMN PESO ;
+
+
++-----------+---------+------+-------------------+-----------+
+| IDCLIENTE | NOME    | SEXO | EMAIL             | CPF       |
++-----------+---------+------+-------------------+-----------+
+|         1 | FLAVIO  | M    | FLAVIO@IG.COM     | 4657765   |
+|         2 | ANDRE   | M    | ANDRE@GLOBO.COM   | 7687567   |
+|         3 | GIOVANA | F    | NULL              | 0876655   |
+|         4 | KARLA   | F    | KARLA@GMAIL.COM   | 545676778 |
+|         5 | DANIELE | F    | DANIELE@GMAIL.COM | 43536789  |
+|         6 | LORENA  | F    | NULL              | 774557887 |
+|         7 | EDUARDO | M    | NULL              | 54376457  |
+|         8 | ANTONIO | M    | ANTONIO@IG.COM    | 12436767  |
+|         9 | ANTONIO | M    | ANTONIO@UOL.COM   | 3423565   |
+|        10 | ELAINE  | F    | ELAINE@GLOBO.COM  | 32567763  |
+|        11 | CARMEM  | F    | CARMEM@IG.COM     | 787832213 |
+|        12 | ADRIANA | F    | ADRIANA@GMAIL.COM | 88556942  |
+|        13 | JOICE   | F    | JOICE@GMAIL.COM   | 55412256  |
++-----------+---------+------+-------------------+-----------+
+
+
+UPDATE CLIENTE
+SET SEXO = 'F'
+WHERE IDCLIENTE = 11;
+
+
+
+
+
