@@ -1,0 +1,1868 @@
+CREATE DATABASE COMERCIO;
+
+CREATE TABLE CLIENTE(
+
+IDCLIENTE INT PRIMARY KEY AUTO_INCREMENT,
+NOME VARCHAR(30) NOT NULL,
+SEXO ENUM('F','M') NOT NULL,
+EMAIL VARCHAR(30) UNIQUE,
+CPF VARCHAR(30) UNIQUE
+
+);
+
+CREATE TABLE ENDERECO(
+
+IDENDERECO INT PRIMARY KEY AUTO_INCREMENT,
+RUA VARCHAR(30) NOT NULL,
+BAIRRO VARCHAR(30) NOT NULL,
+CIDADE VARCHAR(30) NOT NULL,
+ESTADO CHAR(2) NOT NULL,
+ID_CLIENTE INT UNIQUE,
+FOREIGN KEY(ID_CLIENTE)
+REFERENCES CLIENTE(IDCLIENTE)
+
+);
+
+CREATE TABLE TELEFONE(
+
+IDTELEFONE INT PRIMARY KEY AUTO_INCREMENT,
+TIPO ENUM('CEL','RES','COM') NOT NULL,
+NUMERO VARCHAR(30) NOT NULL,
+ID_CLIENTE INT,
+FOREIGN KEY(ID_CLIENTE)
+REFERENCES CLIENTE(IDCLIENTE)
+
+);
+
+-----------------------------------------------------------------------
+
+/* TABELA CLIENTE */
+
+INSERT INTO CLIENTE VALUES(NULL,'JOAO','M','JOAO@IG.COM','7887885');
+INSERT INTO CLIENTE VALUES(NULL,'CARLOS','M','CARLOS@IG.COM','9886844');
+INSERT INTO CLIENTE VALUES(NULL,'ANA','F','ANA@IG.COM','45622322');
+INSERT INTO CLIENTE VALUES(NULL,'CLARA','F',NULL,'7894513');
+INSERT INTO CLIENTE VALUES(NULL,'JORGE','M','JORGE@IG.COM','42555621');
+INSERT INTO CLIENTE VALUES(NULL,'CELIA','F','CELIA@IG.COM','22223558');
+
+SELECT * FROM CLIENTE;
+
++-----------+--------+------+---------------+----------+
+| IDCLIENTE | NOME   | SEXO | EMAIL         | CPF      |
++-----------+--------+------+---------------+----------+
+|         1 | JOAO   | M    | JOAO@IG.COM   | 7887885  |
+|         2 | CARLOS | M    | CARLOS@IG.COM | 9886844  |
+|         3 | ANA    | F    | ANA@IG.COM    | 45622322 |
+|         4 | CLARA  | F    | NULL          | 7894513  |
+|         5 | JORGE  | M    | JORGE@IG.COM  | 42555621 |
+|         6 | CELIA  | F    | CELIA@IG.COM  | 22223558 |
++-----------+--------+------+---------------+----------+
+ 
+
+
+/* CRIANDO TABELA ENDERECO */
+
+INSERT INTO ENDERECO VALUES(NULL,'RUA ANTONIO SA','CENTRO','B.HORIZONTE','MG',4);
+INSERT INTO ENDERECO VALUES(NULL,'RUA CAPITAO HERMES','CENTRO','RIO DE JANEIRO','RJ',1);
+INSERT INTO ENDERECO VALUES(NULL,'RUA PRESIDENTE VARGAS','JARDINS','SAO PAULO','SP',3);
+INSERT INTO ENDERECO VALUES(NULL,'RUA ALFANDEGA','ESTACIO','RIO DE JANEIRO','RJ',2);
+INSERT INTO ENDERECO VALUES(NULL,'RUA OUVIDOR','FLAMENGO','RIO DE JANEIRO','RJ',6);
+INSERT INTO ENDERECO VALUES(NULL,'RUA URUGUAIANA','CENTRO','VITORIA','ES',5);
+INSERT INTO ENDERECO VALUES(NULL,'RUA ALFANDEGA','CENTRO','SAO PAULO','SP',5);
+
++-----------+--------+------+---------------+----------+
+| IDCLIENTE | NOME   | SEXO | EMAIL         | CPF      |
++-----------+--------+------+---------------+----------+
+|         1 | JOAO   | M    | JOAO@IG.COM   | 7887885  |
+|         2 | CARLOS | M    | CARLOS@IG.COM | 9886844  |
+|         3 | ANA    | F    | ANA@IG.COM    | 45622322 |
+|         4 | CLARA  | F    | NULL          | 7894513  |
+|         5 | JORGE  | M    | JORGE@IG.COM  | 42555621 |
+|         6 | CELIA  | F    | CELIA@IG.COM  | 22223558 |
++-----------+--------+------+---------------+----------+
+    1 / /* CHAVE PRIMÁRIA */
+      /
+      /                      /* RELACIONAMENTO 1 - 1 */
+      ///////////////////////////////////////////////////////////////////////////
+                                                                                /                                 
+                                                                                /                                 
+                                                                                /                                
+                                                                              1 / /* CHAVE ESTRANGEIRA */
++------------+-----------------------+----------+----------------+--------+------------+
+| IDENDERECO | RUA                   | BAIRRO   | CIDADE         | ESTADO | ID_CLIENTE |
++------------+-----------------------+----------+----------------+--------+------------+
+|          1 | RUA ANTONIO SA        | CENTRO   | B.HORIZONTE    | MG     |          4 |
+|          2 | RUA CAPITAO HERMES    | CENTRO   | RIO DE JANEIRO | RJ     |          1 |
+|          3 | RUA PRESIDENTE VARGAS | JARDINS  | SAO PAULO      | SP     |          3 |
+|          4 | RUA ALFANDEGA         | ESTACIO  | RIO DE JANEIRO | RJ     |          2 |
+|          5 | RUA OUVIDOR           | FLAMENGO | RIO DE JANEIRO | RJ     |          6 |
+|          6 | RUA URUGUAIANA        | CENTRO   | VITORIA        | ES     |          5 |
++------------+-----------------------+----------+----------------+--------+------------+
+
+
+----------------------------------------------------------------------------------------
+
+
+/* INSERINDO DADOS TELEFONE */
+
+INSERT INTO TELEFONE VALUES(NULL,'CEL','898898855',5);
+INSERT INTO TELEFONE VALUES(NULL,'RES','484848848',5);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','412364887',1);
+INSERT INTO TELEFONE VALUES(NULL,'COM','123212254',2);
+INSERT INTO TELEFONE VALUES(NULL,'RES','789554123',1);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','133255485',3);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','465587823',3);
+INSERT INTO TELEFONE VALUES(NULL,'COM','413335485',1);
+INSERT INTO TELEFONE VALUES(NULL,'RES','999687441',5);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','123655584',2);
+
++-----------+--------+------+---------------+----------+
+| IDCLIENTE | NOME   | SEXO | EMAIL         | CPF      |
++-----------+--------+------+---------------+----------+
+|         1 | JOAO   | M    | JOAO@IG.COM   | 7887885  |
+|         2 | CARLOS | M    | CARLOS@IG.COM | 9886844  |
+|         3 | ANA    | F    | ANA@IG.COM    | 45622322 |
+|         4 | CLARA  | F    | NULL          | 7894513  |
+|         5 | JORGE  | M    | JORGE@IG.COM  | 42555621 |
+|         6 | CELIA  | F    | CELIA@IG.COM  | 22223558 |
++-----------+--------+------+---------------+----------+
+    1 /    /* CHAVE PRIMÁRIA */
+      /
+      /    /* RELACIONAMENTO 1 - N */
+      //////////////////////////////////
+                                       /                                 
+                                       /                                 
+                                     N / /* CHAVE ESTRANGEIRA */
++------------+------+-----------+------------+
+| IDTELEFONE | TIPO | NUMERO    | ID_CLIENTE |
++------------+------+-----------+------------+
+|          1 | CEL  | 898898855 |          5 | <- N
+|          2 | RES  | 484848848 |          5 | <- N
+|          3 | CEL  | 412364887 |          1 | 
+|          4 | COM  | 123212254 |          2 |
+|          5 | RES  | 789554123 |          1 | 
+|          6 | CEL  | 133255485 |          3 |
+|          7 | CEL  | 465587823 |          3 |
+|          8 | COM  | 413335485 |          1 |
+|          9 | RES  | 999687441 |          5 | <- N
+|         10 | CEL  | 123655584 |          2 |
++------------+------+-----------+------------+                                                                              
+
+
+-------------------------------------------------------
+
+            /* SELEÇÃO, PROJEÇÃO JUNÇÃO  */
+
+/* PROJEÇÃO É TUDO O QUE VC QUER VER NA TELA */
+
+SELECT * FROM TELEFONE;  
+
++------------+------+-----------+------------+
+| IDTELEFONE | TIPO | NUMERO    | ID_CLIENTE |
++------------+------+-----------+------------+
+|          1 | CEL  | 898898855 |          5 | <- N
+|          2 | RES  | 484848848 |          5 | <- N
+|          3 | CEL  | 412364887 |          1 | 
+|          4 | COM  | 123212254 |          2 |
+|          5 | RES  | 789554123 |          1 | 
+|          6 | CEL  | 133255485 |          3 |
+|          7 | CEL  | 465587823 |          3 |
+|          8 | COM  | 413335485 |          1 |
+|          9 | RES  | 999687441 |          5 | <- N
+|         10 | CEL  | 123655584 |          2 |
++------------+------+-----------+------------+ 
+
+SELECT TIPO, NUMERO FROM TELEFONE;
+
++------+-----------+
+| TIPO | NUMERO    |
++------+-----------+
+| CEL  | 898898855 |
+| RES  | 484848848 |
+| CEL  | 412364887 |
+| COM  | 123212254 |
+| RES  | 789554123 |
+| CEL  | 133255485 |
+| CEL  | 465587823 |
+| COM  | 413335485 |
+| RES  | 999687441 |
+| CEL  | 123655584 |
++------+-----------+
+
+SELECT NOW() AS DATA_ATUAL;
+
++---------------------+
+| DATA_ATUAL          |
++---------------------+
+| 2020-05-22 06:47:24 |
++---------------------+
+
+SELECT 2+2 AS SOMA;
+
++------+
+| SOMA |
++------+
+|    4 |
++------+
+
+SELECT 2+2 AS SOMA, NOME, NOW()
+FROM CLIENTE;
+
++------+--------+---------------------+
+| SOMA | NOME   | NOW()               |
++------+--------+---------------------+
+|    4 | JOAO   | 2020-05-22 06:49:31 |
+|    4 | CARLOS | 2020-05-22 06:49:31 |
+|    4 | ANA    | 2020-05-22 06:49:31 |
+|    4 | CLARA  | 2020-05-22 06:49:31 |
+|    4 | JORGE  | 2020-05-22 06:49:31 |
+|    4 | CELIA  | 2020-05-22 06:49:31 |
++------+--------+---------------------+
+
+
+------------------------------------------------------
+
+                    /* SELEÇÃO ----FILTRO---- */
+
+
+/* SUBCONJUNTO DE UM TOTAL DE CONJUNTOS  */
+
+/* CLAUSULA WHERE */
+
+
+-- TRAZER NOME, SEXO E EMAIL DAS MULHERES
+
+SELECT NOME, SEXO, EMAIL /* PROJEÇÃO */
+FROM CLIENTE /* ORIGEM */              
+WHERE SEX0 = 'F'; --> SELEÇÃO
+
++-------+------+--------------+
+| NOME  | SEXO | EMAIL        |
++-------+------+--------------+
+| ANA   | F    | ANA@IG.COM   |
+| CLARA | F    | NULL         |
+| CELIA | F    | CELIA@IG.COM |
++-------+------+--------------+
+
+-- TODOS OS NUMEROS DE TELEFONE CELULAR
+
+SELECT NUMERO /* PROJEÇÃO */ 
+FROM TELEFONE /* ORIGEM */
+WHERE TIPO ='CEL'; --> SELEÇÃO
+
++-----------+
+| NUMERO    |
++-----------+
+| 898898855 |
+| 412364887 |
+| 133255485 |
+| 465587823 |
+| 123655584 |
++-----------+
+
+
+
+------------------------------------------------
+
+                 /* JUNÇÃO INNER JOIN*/
+
+
+SELECT NOME, EMAIL, IDCLIENTE
+FROM CLIENTE;
+
++--------+---------------+-----------+
+| NOME   | EMAIL         | IDCLIENTE |
++--------+---------------+-----------+
+| JOAO   | JOAO@IG.COM   |         1 |
+| CARLOS | CARLOS@IG.COM |         2 |
+| ANA    | ANA@IG.COM    |         3 |
+| CLARA  | NULL          |         4 |
+| JORGE  | JORGE@IG.COM  |         5 |
+| CELIA  | CELIA@IG.COM  |         6 |
++--------+---------------+-----------+
+
+
+SELECT ID_CLIENTE, BAIRRO, CIDADE
+FROM ENDERECO;
+
++------------+----------+----------------+
+| ID_CLIENTE | BAIRRO   | CIDADE         |
++------------+----------+----------------+
+|          4 | CENTRO   | B.HORIZONTE    |
+|          1 | CENTRO   | RIO DE JANEIRO |
+|          3 | JARDINS  | SAO PAULO      |
+|          2 | ESTACIO  | RIO DE JANEIRO |
+|          6 | FLAMENGO | RIO DE JANEIRO |
+|          5 | CENTRO   | VITORIA        |
++------------+----------+----------------+
+
+
+
+/* NOME, SEXO DA TABELA CLIENTE E BAIRRO E CIDADE DA TABELA ENDEREÇO */
+
+SELECT NOME, SEXO, BAIRRO, CIDADE /* PROJEÇÃO */
+FROM CLIENTE /* ORIGEM */
+INNER JOIN ENDERECO  /* JUNÇÃO */
+ON IDCLIENTE = ID_CLIENTE;
+
+  /* CLIENTE */ -- /* TABELA ENDERECO */  
++--------+------+----------+----------------+
+| NOME   | SEXO | BAIRRO   | CIDADE         |
++--------+------+----------+----------------+
+| JOAO   | M    | CENTRO   | RIO DE JANEIRO |
+| CARLOS | M    | ESTACIO  | RIO DE JANEIRO |
+| ANA    | F    | JARDINS  | SAO PAULO      |
+| CLARA  | F    | CENTRO   | B.HORIZONTE    |
+| JORGE  | M    | CENTRO   | VITORIA        |
+| CELIA  | F    | FLAMENGO | RIO DE JANEIRO |
++--------+------+----------+----------------+
+
+/* NOME, SEXO, BAIRRO, CIDADE TABELA ENDERECO DAS MULHERES */
+
+
+SELECT NOME, SEXO, BAIRRO, CIDADE /* PROJEÇÃO */
+FROM CLIENTE  /* ORIGEM */
+INNER JOIN ENDERECO /* JUNÇÃO */
+ON IDCLIENTE = ID_CLIENTE  
+WHERE SEXO ='F'; /* SELEÇÃO */
+
++-------+------+----------+----------------+
+| NOME  | SEXO | BAIRRO   | CIDADE         |
++-------+------+----------+----------------+
+| ANA   | F    | JARDINS  | SAO PAULO      |
+| CLARA | F    | CENTRO   | B.HORIZONTE    |
+| CELIA | F    | FLAMENGO | RIO DE JANEIRO |
++-------+------+----------+----------------+
+
+
+/* NOME, SEXO, BAIRRO, CIDADE TABELA ENDERECO DOS HOMENS */
+
+SELECT NOME, SEXO, BAIRRO, CIDADE /* PROJEÇÃO */
+FROM CLIENTE  /* ORIGEM */
+INNER JOIN ENDERECO /* JUNÇÃO */
+ON IDCLIENTE = ID_CLIENTE
+WHERE SEXO ='M'; /* SELEÇÃO */
+
++--------+------+---------+----------------+
+| NOME   | SEXO | BAIRRO  | CIDADE         |
++--------+------+---------+----------------+
+| JOAO   | M    | CENTRO  | RIO DE JANEIRO |
+| CARLOS | M    | ESTACIO | RIO DE JANEIRO |
+| JORGE  | M    | CENTRO  | VITORIA        |
++--------+------+---------+----------------+
+
+/* NOME, SEXO, BAIRRO, CIDADE TABELA ENDERECO DOS HOMENS QUE MORAM NO CENTRO */
+
+SELECT NOME, SEXO, BAIRRO, CIDADE /* PROJEÇÃO */ 
+FROM CLIENTE /* ORIGEM */
+INNER JOIN ENDERECO /* JUNÇÃO */
+ON IDCLIENTE = ID_CLIENTE 
+WHERE SEXO ='M' AND BAIRRO ='CENTRO'; /* SELEÇÃO */
+
++-------+------+--------+----------------+
+| NOME  | SEXO | BAIRRO | CIDADE         |
++-------+------+--------+----------------+
+| JOAO  | M    | CENTRO | RIO DE JANEIRO |
+| JORGE | M    | CENTRO | VITORIA        |
++-------+------+--------+----------------+
+
+/* NOME, SEXO, BAIRRO, CIDADE TABELA ENDERECO DAS MULHERES QUE MORAM NO CENTRO */
+
+SELECT NOME, SEXO, BAIRRO, CIDADE /* PROJEÇÃO */
+FROM CLIENTE /* ORIGEM */
+INNER JOIN ENDERECO /* JUNÇÃO */
+ON IDCLIENTE = ID_CLIENTE
+WHERE SEXO = 'F' AND BAIRRO ='CENTRO'; /* SELEÇÃO */
+
++-------+------+--------+-------------+
+| NOME  | SEXO | BAIRRO | CIDADE      |
++-------+------+--------+-------------+
+| CLARA | F    | CENTRO | B.HORIZONTE |
++-------+------+--------+-------------+
+
+/* NOME, SEXO, EMAIL , TIPO, NUMERO */
+
+SELECT NOME, SEXO, EMAIL, TIPO, NUMERO /*PROJEÇÃO*/
+FROM CLIENTE /*ORIGEM*/
+INNER JOIN TELEFONE /*JUNÇÃO*/
+ON IDCLIENTE = ID_CLIENTE;
+
++--------+------+---------------+------+-----------+
+| NOME   | SEXO | EMAIL         | TIPO | NUMERO    |
++--------+------+---------------+------+-----------+
+| JOAO   | M    | JOAO@IG.COM   | CEL  | 412364887 |
+| JOAO   | M    | JOAO@IG.COM   | RES  | 789554123 |
+| JOAO   | M    | JOAO@IG.COM   | COM  | 413335485 |
+| CARLOS | M    | CARLOS@IG.COM | COM  | 123212254 |
+| CARLOS | M    | CARLOS@IG.COM | CEL  | 123655584 |
+| ANA    | F    | ANA@IG.COM    | CEL  | 133255485 |
+| ANA    | F    | ANA@IG.COM    | CEL  | 465587823 |
+| JORGE  | M    | JORGE@IG.COM  | CEL  | 898898855 |
+| JORGE  | M    | JORGE@IG.COM  | RES  | 484848848 |
+| JORGE  | M    | JORGE@IG.COM  | RES  | 999687441 |
++--------+------+---------------+------+-----------+
+
+/* NOME, SEXO, BAIRRO, CIDADE, TIPO, NUMERO */
+
+
+SELECT CLIENTE.NOME, CLIENTE.SEXO, ENDERECO.BAIRRO, ENDERECO.CIDADE, TELEFONE.TIPO, TELEFONE.NUMERO
+FROM CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE;
+
++--------+------+---------+----------------+------+-----------+
+| NOME   | SEXO | BAIRRO  | CIDADE         | TIPO | NUMERO    |
++--------+------+---------+----------------+------+-----------+
+| JOAO   | M    | CENTRO  | RIO DE JANEIRO | CEL  | 412364887 |
+| JOAO   | M    | CENTRO  | RIO DE JANEIRO | RES  | 789554123 |
+| JOAO   | M    | CENTRO  | RIO DE JANEIRO | COM  | 413335485 |
+| CARLOS | M    | ESTACIO | RIO DE JANEIRO | COM  | 123212254 |
+| CARLOS | M    | ESTACIO | RIO DE JANEIRO | CEL  | 123655584 |
+| ANA    | F    | JARDINS | SAO PAULO      | CEL  | 133255485 |
+| ANA    | F    | JARDINS | SAO PAULO      | CEL  | 465587823 |
+| JORGE  | M    | CENTRO  | VITORIA        | CEL  | 898898855 |
+| JORGE  | M    | CENTRO  | VITORIA        | RES  | 484848848 |
+| JORGE  | M    | CENTRO  | VITORIA        | RES  | 999687441 |
++--------+------+---------+----------------+------+-----------+
+
+/* PONTEIRAMENTO */
+
+SELECT C.NOME, C.SEXO, E.BAIRRO, E.CIDADE, T.TIPO, T.NUMEROS
+FROM CLIENTE C
+INNER JOIN ENDERECO E
+ON C.IDCLIENTE = E.ID_CLIENTE
+INNER JOIN TELEFONE T
+ON C.IDCLIENTE = T.ID_CLIENTE;
+
+
+        
+---------------------------------------------------
+                 / EXERCICIOS /
+---------------------------------------------------
+
+-- TRAZER NOME, SEXO, EMAIL,TIPO E NUMERO
+
+SELECT CLIENTE.NOME, CLIENTE.SEXO, CLIENTE.EMAIL, TELEFONE.TIPO, TELEFONE.TIPO
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE; /* ESTRANGEIRA ID_CLIENTE NA TELEFONE */
+
++--------+------+---------------+------+------+
+| NOME   | SEXO | EMAIL         | TIPO | TIPO |
++--------+------+---------------+------+------+
+| JOAO   | M    | JOAO@IG.COM   | CEL  | CEL  |
+| JOAO   | M    | JOAO@IG.COM   | RES  | RES  |
+| JOAO   | M    | JOAO@IG.COM   | COM  | COM  |
+| CARLOS | M    | CARLOS@IG.COM | COM  | COM  |
+| CARLOS | M    | CARLOS@IG.COM | CEL  | CEL  |
+| ANA    | F    | ANA@IG.COM    | CEL  | CEL  |
+| ANA    | F    | ANA@IG.COM    | CEL  | CEL  |
+| JORGE  | M    | JORGE@IG.COM  | CEL  | CEL  |
+| JORGE  | M    | JORGE@IG.COM  | RES  | RES  |
+| JORGE  | M    | JORGE@IG.COM  | RES  | RES  |
++--------+------+---------------+------+------+
+
+-- TRAZER NOME, SEXO, TIPO E BAIRRO
+
+SELECT NOME, SEXO, TIPO, BAIRRO
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE /* ESTRANGEIRA ID_CLIENTE NA TELEFONE */
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE; /* ESTRANGEIRA ID_CLIENTE NA ENDEREÇO */
+
+SELECT CLIENTE.NOME, CLIENTE.SEXO, TELEFONE.TIPO, ENDERECO.BAIRRO
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFNOE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+
+
++--------+------+------+---------+
+| NOME   | SEXO | TIPO | BAIRRO  |
++--------+------+------+---------+
+| JOAO   | M    | CEL  | CENTRO  |
+| JOAO   | M    | RES  | CENTRO  |
+| JOAO   | M    | COM  | CENTRO  |
+| CARLOS | M    | COM  | ESTACIO |
+| CARLOS | M    | CEL  | ESTACIO |
+| ANA    | F    | CEL  | JARDINS |
+| ANA    | F    | CEL  | JARDINS |
+| JORGE  | M    | CEL  | CENTRO  |
+| JORGE  | M    | RES  | CENTRO  |
+| JORGE  | M    | RES  | CENTRO  |
++--------+------+------+---------+
+
+-- TRAZER NOME, TIPO, BAIRRO DAS MULHERES
+
+SELECT CLIENTE.NOME, TELEFONE.TIPO, ENDERECO.BAIRRO
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE         /* ESTRANGEIRA ID_CLIENTE NA TELEFONE */
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE /* ESTRANGEIRA ID_CLIENTE NA ENDERECO */
+WHERE SEXO = 'F';
+
++------+------+---------+
+| NOME | TIPO | BAIRRO  |
++------+------+---------+  /* A CELIA NAO APARECE, POIS ELA NÃO TEM TELEFONE REGISTRADO */
+| ANA  | CEL  | JARDINS |
+| ANA  | CEL  | JARDINS |
++------+------+---------+
+
+-------------------------------------------------------           
+                CATEGORIAS DE PROGRAMAÇÃO
+-------------------------------------------------------
+/*
+
+   DML -> DATA MANIPULATION LANGUAGE
+   DDL -> DATA DEFINITION LANGUAGE
+   DCL -> DATA CONTROL LANGUAGE
+   TCL -> TANSACTION CONTROL LANGUAGE
+
+*/
+
+                 -------------------------------
+                               DML
+                 -------------------------------            
+
+                           --------
+                            INSERT
+                           --------
+
+INSERT INTO CLIENTE VALUES(NULL,'PAULA','M',NULL,'45646446');
+
+INSERT INTO ENDERECO VALUES(NULL,'RUA JOAQUIM SILVA','ALVORADA','NITEROI','RJ',7);
+
+ 
+                           --------
+                            FILTROS 
+                           --------
+
+SELECT * FROM CLIENTE
+WHERE SEXO = 'M';
+
+
+                           --------
+                            UPDATE
+                           --------
+
+SELECT * FROM CLIENTE  /* CHECA A CHAVE PRIMÁRIA DA PESSOA */
+WHERE IDCLIENTE = 7; 
+
+UPDATE CLIENTE
+SET SEXO = 'F'
+WHERE IDCLIENTE = 7;
+
+                           --------
+                            DELETE
+                           --------
+
+INSERT INTO CLIENTE VALUES (NULL, "XXX",'M',NULL,'XXX');
+
++-----------+--------+------+---------------+----------+
+| IDCLIENTE | NOME   | SEXO | EMAIL         | CPF      |
++-----------+--------+------+---------------+----------+
+|         1 | JOAO   | M    | JOAO@IG.COM   | 7887885  |
+|         2 | CARLOS | M    | CARLOS@IG.COM | 9886844  |
+|         3 | ANA    | F    | ANA@IG.COM    | 45622322 |
+|         4 | CLARA  | F    | NULL          | 7894513  |
+|         5 | JORGE  | M    | JORGE@IG.COM  | 42555621 |
+|         6 | CELIA  | F    | CELIA@IG.COM  | 22223558 |
+|         7 | PAULA  | F    | NULL          | 45646446 |
+|         9 | XXX    | M    | NULL          | XXX      |
++-----------+--------+------+---------------+----------+
+
+SELECT * FROM CLIENTE;
+
+
+SELECT * FROM CLIENTE
+WHERE IDCLIENTE = 9;
+
+DELETE FROM CLIENTE
+WHERE IDCLIENTE = 9;
+
+DELETE FROM CLIENTE
+WHERE IDCLIENTE =7;
+
+
+                 -------------------------------
+                               DDL
+                 -------------------------------  
+
+                 /* DATA DEFINITION LANGUAGE */
+
+/* TRATA DO TIPO DE DADO QUE ESTÁ SENDO TRATADO */
+
+
+CREATE TABLE PRODUTO(
+
+IDPRODUTO INT PRIMARY KEY AUTO_INCREMENT,
+NOME_PRODUTO VARCHAR(30) NOT NULL,
+PRECO INT,
+FRETE FLOAT(10,2) NOT NULL
+);
+
+                        -------------
+                         ALTER TABLE
+                        -------------
+
+
+/*PODE ALTERAR NOME DE UMA COLUNA */ 
+
+ALTER TABLE PRODUTO
+CHANGE PRECO VALOR_UNITARIO INT NOT NULL;
+
+                      -------------
+                         MODIFY
+                      -------------
+
+ALTER TABLE PRODUTO 
+MODIFY VALOR_UNITARIO VALOR_UNITARIO VARCHAR(50) NOT NULL;
+
+
+
+                      -------------
+                       ADD COLUMN 
+                      -------------
+ALTER TABLE PRODUTO 
+ADD PESO FLOAT(10,2) NOT NULL; /* ULTIMA POSICAO */ 
+
+
+                      -------------
+                       DROP COLUMN 
+                      -------------
+
+/* APAGANDO UMA COLUNA */
+
+ALTER TABLE PRODUTO  /* APAGA COLUNA PESO */
+DROP COLUMN PESO ;
+
+
+                      -------------
+                       ADD COLUMN
+                      -------------
+
+ALTER TABLE PRODUTO
+ADD COLUMN PESO FLOAT(10,2) NOT NULL
+AFTER NOME_PRODUTO;
+
+ALTER TABLE PRODUTO 
+DROP COLUMN PESO;
+
+ALTER TABLE PRODUTO 
+ADD COLUMN PESO FLOAT(10,2)NOT NULL 
+FIRST ;A
+
+
+                 ---------------     
+                  EXERCICIO DML
+                 ---------------
+ 
+CREATE DATABASE COMERCIO;
+
+CREATE TABLE CLIENTE(
+
+IDCLIENTE INT PRIMARY KEY AUTO_INCREMENT,
+NOME VARCHAR(30) NOT NULL,
+SEXO ENUM('F','M') NOT NULL,
+EMAIL VARCHAR(30) UNIQUE,
+CPF VARCHAR(30) UNIQUE
+
+);
+
+CREATE TABLE ENDERECO(
+
+IDENDERECO INT PRIMARY KEY AUTO_INCREMENT,
+RUA VARCHAR(30) NOT NULL,
+BAIRRO VARCHAR(30) NOT NULL,
+CIDADE VARCHAR(30) NOT NULL,
+ESTADO CHAR(2) NOT NULL,
+ID_CLIENTE INT UNIQUE,
+FOREIGN KEY(ID_CLIENTE)
+REFERENCES CLIENTE(IDCLIENTE)
+
+);
+
+CREATE TABLE TELEFONE(
+
+IDTELEFONE INT PRIMARY KEY AUTO_INCREMENT,
+TIPO ENUM('CEL','RES','COM') NOT NULL,
+NUMERO VARCHAR(30) NOT NULL,
+ID_CLIENTE INT,
+FOREIGN KEY(ID_CLIENTE)
+REFERENCES CLIENTE(IDCLIENTE)
+
+);
+                 --------------
+ 
+/* EXERCICIOS DML */
+
+INSERT INTO CLIENTE VALUES(NULL,'JOAO','M','JOAO@IG.COM','7887885');
+INSERT INTO CLIENTE VALUES(NULL,'CARLOS','M','CARLOS@IG.COM','9886844');
+INSERT INTO CLIENTE VALUES(NULL,'ANA','F','ANA@IG.COM','45622322');
+INSERT INTO CLIENTE VALUES(NULL,'CLARA','F',NULL,'7894513');
+INSERT INTO CLIENTE VALUES(NULL,'JORGE','M','JORGE@IG.COM','42555621');
+INSERT INTO CLIENTE VALUES(NULL,'CELIA','F','CELIA@IG.COM','22223558');
+
+
+INSERT INTO CLIENTE VALUES(NULL,'FLAVIO','M','FLAVIO@IG.COM','4657765');
+INSERT INTO CLIENTE VALUES(NULL,'ANDRE','M','ANDRE@GLOBO.COM','7687567');
+INSERT INTO CLIENTE VALUES(NULL,'GIOVANA','F',NULL,'0876655');
+INSERT INTO CLIENTE VALUES(NULL,'KARLA','M','KARLA@GMAIL.COM','545676778');
+INSERT INTO CLIENTE VALUES(NULL,'DANIELE','M','DANIELE@GMAIL.COM','43536789');
+INSERT INTO CLIENTE VALUES(NULL,'LORENA','M',NULL,'774557887');
+INSERT INTO CLIENTE VALUES(NULL,'EDUARDO','M',NULL,'54376457');
+INSERT INTO CLIENTE VALUES(NULL,'ANTONIO','F','ANTONIO@IG.COM','12436767');
+INSERT INTO CLIENTE VALUES(NULL,'ANTONIO','M','ANTONIO@UOL.COM','3423565');
+INSERT INTO CLIENTE VALUES(NULL,'ELAINE','M','ELAINE@GLOBO.COM','32567763');
+INSERT INTO CLIENTE VALUES(NULL,'CARMEM','M','CARMEM@IG.COM','787832213');
+INSERT INTO CLIENTE VALUES(NULL,'ADRIANA','F','ADRIANA@GMAIL.COM','88556942');
+INSERT INTO CLIENTE VALUES(NULL,'JOICE','F','JOICE@GMAIL.COM','55412256');
+
+
+/* CADASTRE UM ENDERECO PARA CADA CLIENTE */
+
+INSERT INTO ENDERECO VALUES(NULL,'RUA ANTONIO SA','CENTRO','B.HORIZONTE','MG',4);
+INSERT INTO ENDERECO VALUES(NULL,'RUA CAPITAO HERMES','CENTRO','RIO DE JANEIRO','RJ',1);
+INSERT INTO ENDERECO VALUES(NULL,'RUA PRESIDENTE VARGAS','JARDINS','SAO PAULO','SP',3);
+INSERT INTO ENDERECO VALUES(NULL,'RUA ALFANDEGA','ESTACIO','RIO DE JANEIRO','RJ',2);
+INSERT INTO ENDERECO VALUES(NULL,'RUA OUVIDOR','FLAMENGO','RIO DE JANEIRO','RJ',6);
+INSERT INTO ENDERECO VALUES(NULL,'RUA URUGUAIANA','CENTRO','VITORIA','ES',5);
+INSERT INTO ENDERECO VALUES(NULL,'RUA ALFANDEGA','CENTRO','SAO PAULO','SP',7);
+
+
+
+INSERT INTO ENDERECO VALUES(NULL,'RUA GUEDES','CASCADURA','B. HORIZONTE','MG',8);
+INSERT INTO ENDERECO VALUES(NULL,'RUA MAIA LACERDA','ESTACIO','RIO DE JANEIRO','RJ',9);
+INSERT INTO ENDERECO VALUES(NULL,'RUA VISCONDESSA','CENTRO','RIO DE JANEIRO','RJ',10);
+INSERT INTO ENDERECO VALUES(NULL,'RUA NELSON MANDELA','COPACABANA','RIO DE JANEIRO','RJ',11);
+INSERT INTO ENDERECO VALUES(NULL,'RUA ARAUJO LIMA','CENTRO','VITORIA','ES',13);
+INSERT INTO ENDERECO VALUES(NULL,'RUA CASTRO ALVES','LEBLON','RIO DE JANEIRO','RJ',14);
+INSERT INTO ENDERECO VALUES(NULL,'AV CAPITAO ANTUNES','CENTRO','CURITIBA','PR',15);
+INSERT INTO ENDERECO VALUES(NULL,'AV CARLOS BARROSO','JARDINS','SAO PAULO','SP',16);
+INSERT INTO ENDERECO VALUES(NULL,'ALAMEDA SAMPAIO','BOM RETIRO','CURITIBA','PR',17);
+INSERT INTO ENDERECO VALUES(NULL,'RUA DA LAPA','LAPA','SAO PAULO','SP',18);
+INSERT INTO ENDERECO VALUES(NULL,'RUA GERONIMO','CENTRO','RIO DE JANEIRO','RJ',19);
+
+
+/* CADASTRE TELEFONES PARA OS CLIENTES */
+
+INSERT INTO TELEFONE VALUES(NULL,'CEL','898898855',5);
+INSERT INTO TELEFONE VALUES(NULL,'RES','484848848',5);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','412364887',1);
+INSERT INTO TELEFONE VALUES(NULL,'COM','123212254',2);
+INSERT INTO TELEFONE VALUES(NULL,'RES','789554123',1);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','133255485',3);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','465587823',3);
+INSERT INTO TELEFONE VALUES(NULL,'COM','413335485',1);
+INSERT INTO TELEFONE VALUES(NULL,'RES','999687441',5);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','123655584',2);
+INSERT INTO TELEFONE VALUES(NULL,'RES','68976565',9);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','99656675',9);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','55558887',10);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','88668786',11);
+INSERT INTO TELEFONE VALUES(NULL,'COM','55689654',11);
+INSERT INTO TELEFONE VALUES(NULL,'COM','88687979',12);
+INSERT INTO TELEFONE VALUES(NULL,'COM','88965676',13);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','89966809',15);
+INSERT INTO TELEFONE VALUES(NULL,'COM','88679978',16);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','99655768',17);
+INSERT INTO TELEFONE VALUES(NULL,'RES','89955665',18);
+INSERT INTO TELEFONE VALUES(NULL,'COM','77455786',19);
+INSERT INTO TELEFONE VALUES(NULL,'RES','89766554',19);
+INSERT INTO TELEFONE VALUES(NULL,'RES','77755785',15);
+INSERT INTO TELEFONE VALUES(NULL,'COM','44522578',15);
+
+UPDATE TELEFONE
+SET TIPO ='COM'
+WHERE IDTELEFONE = 22;
+
+/* RELATORIO GERAL DE TODOS OS CLIENTES */
+/* RELATORIO DE MULHERES */
+/* QUANTIDADE DE HOMENS E MULHERES */
+/* IDS E EMAIL DAS MULHERES QUE MORAM NO CENTRO DO RIO DE JANEIRO E
+NÃO TENHAM CELULAR */
+
+
+
+                         /* RELATORIO GERAL DE TODOS OS CLIENTES */
+
+SELECT 	CLIENTE.IDCLIENTE,CLIENTE.NOME,CLIENTE.SEXO,CLIENTE.EMAIL,CLIENTE.CPF,
+		TELEFONE.TIPO,TELEFONE.NUMERO,
+		ENDERECO.RUA,ENDERECO.BAIRRO,ENDERECO.CIDADE,ENDERECO.ESTADO
+FROM CLIENTE 
+INNER JOIN TELEFONE 
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO 
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE;
+
+
++-----------+---------+------+-------------------+-----------+------+-----------+-----------------------+------------+----------------+--------+
+| IDCLIENTE | NOME    | SEXO | EMAIL             | CPF       | TIPO | NUMERO    | RUA                   | BAIRRO     | CIDADE         | ESTADO |
++-----------+---------+------+-------------------+-----------+------+-----------+-----------------------+------------+----------------+--------+
+|         1 | JOAO    | M    | JOAO@IG.COM       | 7887885   | CEL  | 412364887 | RUA CAPITAO HERMES    | CENTRO     | RIO DE JANEIRO | RJ     |
+|         1 | JOAO    | M    | JOAO@IG.COM       | 7887885   | RES  | 789554123 | RUA CAPITAO HERMES    | CENTRO     | RIO DE JANEIRO | RJ     |
+|         1 | JOAO    | M    | JOAO@IG.COM       | 7887885   | COM  | 413335485 | RUA CAPITAO HERMES    | CENTRO     | RIO DE JANEIRO | RJ     |
+|         3 | ANA     | F    | ANA@IG.COM        | 45622322  | CEL  | 133255485 | RUA PRESIDENTE VARGAS | JARDINS    | SAO PAULO      | SP     |
+|         3 | ANA     | F    | ANA@IG.COM        | 45622322  | CEL  | 465587823 | RUA PRESIDENTE VARGAS | JARDINS    | SAO PAULO      | SP     |
+|         2 | CARLOS  | M    | CARLOS@IG.COM     | 9886844   | COM  | 123212254 | RUA ALFANDEGA         | ESTACIO    | RIO DE JANEIRO | RJ     |
+|         2 | CARLOS  | M    | CARLOS@IG.COM     | 9886844   | CEL  | 123655584 | RUA ALFANDEGA         | ESTACIO    | RIO DE JANEIRO | RJ     |
+|         5 | JORGE   | M    | JORGE@IG.COM      | 42555621  | CEL  | 898898855 | RUA URUGUAIANA        | CENTRO     | VITORIA        | ES     |
+|         5 | JORGE   | M    | JORGE@IG.COM      | 42555621  | RES  | 484848848 | RUA URUGUAIANA        | CENTRO     | VITORIA        | ES     |
+|         5 | JORGE   | M    | JORGE@IG.COM      | 42555621  | RES  | 999687441 | RUA URUGUAIANA        | CENTRO     | VITORIA        | ES     |
+|         9 | GIOVANA | F    | NULL              | 0876655   | RES  | 68976565  | RUA MAIA LACERDA      | ESTACIO    | RIO DE JANEIRO | RJ     |
+|         9 | GIOVANA | F    | NULL              | 0876655   | CEL  | 99656675  | RUA MAIA LACERDA      | ESTACIO    | RIO DE JANEIRO | RJ     |
+|        10 | KARLA   | F    | KARLA@GMAIL.COM   | 545676778 | CEL  | 55558887  | RUA VISCONDESSA       | CENTRO     | RIO DE JANEIRO | RJ     |
+|        11 | DANIELE | F    | DANIELE@GMAIL.COM | 43536789  | CEL  | 33567765  | RUA NELSON MANDELA    | COPACABANA | RIO DE JANEIRO | RJ     |
+|        11 | DANIELE | F    | DANIELE@GMAIL.COM | 43536789  | CEL  | 88668786  | RUA NELSON MANDELA    | COPACABANA | RIO DE JANEIRO | RJ     |
+|        11 | DANIELE | F    | DANIELE@GMAIL.COM | 43536789  | COM  | 55689654  | RUA NELSON MANDELA    | COPACABANA | RIO DE JANEIRO | RJ     |
+|        13 | EDUARDO | M    | NULL              | 54376457  | COM  | 88965676  | RUA ARAUJO LIMA       | CENTRO     | VITORIA        | ES     |
+|        15 | ANTONIO | M    | ANTONIO@UOL.COM   | 3423565   | CEL  | 89966809  | AV CAPITAO ANTUNES    | CENTRO     | CURITIBA       | PR     |
+|        15 | ANTONIO | M    | ANTONIO@UOL.COM   | 3423565   | RES  | 77755785  | AV CAPITAO ANTUNES    | CENTRO     | CURITIBA       | PR     |
+|        15 | ANTONIO | M    | ANTONIO@UOL.COM   | 3423565   | COM  | 44522578  | AV CAPITAO ANTUNES    | CENTRO     | CURITIBA       | PR     |
+|        16 | ELAINE  | F    | ELAINE@GLOBO.COM  | 32567763  | COM  | 88679978  | AV CARLOS BARROSO     | JARDINS    | SAO PAULO      | SP     |
+|        17 | CARMEM  | F    | CARMEM@IG.COM     | 787832213 | CEL  | 99655768  | ALAMEDA SAMPAIO       | BOM RETIRO | CURITIBA       | PR     |
+|        18 | ADRIANA | F    | ADRIANA@GMAIL.COM | 88556942  | RES  | 89955665  | RUA DA LAPA           | LAPA       | SAO PAULO      | SP     |
+|        19 | JOICE   | F    | JOICE@GMAIL.COM   | 55412256  | RES  | 77455786  | RUA GERONIMO          | CENTRO     | RIO DE JANEIRO | RJ     |
+|        19 | JOICE   | F    | JOICE@GMAIL.COM   | 55412256  | RES  | 89766554  | RUA GERONIMO          | CENTRO     | RIO DE JANEIRO | RJ     |
++-----------+---------+------+-------------------+-----------+------+-----------+-----------------------+------------+----------------+--------+
+                                /* ALTERANDO INFORMAÇÕES */
+
+
+UPDATE CLIENTE  /* ALTERANDO SEXO DANIELLE */
+SET SEXO = 'F'
+WHERE IDCLIENTE = 11;
+
+UPDATE CLIENTE  /* ALTERANDO SEXO ELAINE */
+SET SEXO = 'F'
+WHERE IDCLIENTE = 16;
+
+UPDATE CLIENTE  /* ALTERANDO SEXO CARMEM */
+SET SEXO = 'F'
+WHERE IDCLIENTE = 17;
+
+UPDATE CLIENTE  /* ALTERANDO SEXO KARLA */
+SET SEXO = 'F'
+WHERE IDCLIENTE = 10;
+
+UPDATE CLIENTE  /* ALTERANDO SEXO LORENA */
+SET SEXO = 'F'
+WHERE IDCLIENTE = 12;
+
+                                /* OU */ 
+
+
+UPDATE CLIENTE SET SEXO = 'F'
+WHERE IDCLIENTE IN(11,16,17,10,12);
+
+
+UPDATE CLIENTE  /* ALTERANDO SEXO ANTONIO */
+SET SEXO = 'M'
+WHERE IDCLIENTE = 14;
+
+
+                                /* RELATORIO DE MULHERES */
+
+SELECT 	CLIENTE.IDCLIENTE,CLIENTE.NOME, CLIENTE.SEXO, CLIENTE.EMAIL, CLIENTE.CPF, 
+		TELEFONE.TIPO, TELEFONE.NUMERO, 
+		ENDERECO.RUA, ENDERECO.BAIRRO, ENDERECO.CIDADE,ENDERECO.ESTADO
+
+FROM CLIENTE 
+INNER JOIN TELEFONE 
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO 
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+WHERE SEXO = 'F';
+
+
++-----------+---------+------+-------------------+-----------+------+-----------+-----------------------+------------+----------------+--------+
+| IDCLIENTE | NOME    | SEXO | EMAIL             | CPF       | TIPO | NUMERO    | RUA                   | BAIRRO     | CIDADE         | ESTADO |
++-----------+---------+------+-------------------+-----------+------+-----------+-----------------------+------------+----------------+--------+
+|         3 | ANA     | F    | ANA@IG.COM        | 45622322  | CEL  | 133255485 | RUA PRESIDENTE VARGAS | JARDINS    | SAO PAULO      | SP     |
+|         3 | ANA     | F    | ANA@IG.COM        | 45622322  | CEL  | 465587823 | RUA PRESIDENTE VARGAS | JARDINS    | SAO PAULO      | SP     |
+|         9 | GIOVANA | F    | NULL              | 0876655   | RES  | 68976565  | RUA MAIA LACERDA      | ESTACIO    | RIO DE JANEIRO | RJ     |
+|         9 | GIOVANA | F    | NULL              | 0876655   | CEL  | 99656675  | RUA MAIA LACERDA      | ESTACIO    | RIO DE JANEIRO | RJ     |
+|        10 | KARLA   | F    | KARLA@GMAIL.COM   | 545676778 | CEL  | 55558887  | RUA VISCONDESSA       | CENTRO     | RIO DE JANEIRO | RJ     |
+|        11 | DANIELE | F    | DANIELE@GMAIL.COM | 43536789  | CEL  | 33567765  | RUA NELSON MANDELA    | COPACABANA | RIO DE JANEIRO | RJ     |
+|        11 | DANIELE | F    | DANIELE@GMAIL.COM | 43536789  | CEL  | 88668786  | RUA NELSON MANDELA    | COPACABANA | RIO DE JANEIRO | RJ     |
+|        11 | DANIELE | F    | DANIELE@GMAIL.COM | 43536789  | COM  | 55689654  | RUA NELSON MANDELA    | COPACABANA | RIO DE JANEIRO | RJ     |
+|        16 | ELAINE  | F    | ELAINE@GLOBO.COM  | 32567763  | COM  | 88679978  | AV CARLOS BARROSO     | JARDINS    | SAO PAULO      | SP     |
+|        17 | CARMEM  | F    | CARMEM@IG.COM     | 787832213 | CEL  | 99655768  | ALAMEDA SAMPAIO       | BOM RETIRO | CURITIBA       | PR     |
+|        18 | ADRIANA | F    | ADRIANA@GMAIL.COM | 88556942  | RES  | 89955665  | RUA DA LAPA           | LAPA       | SAO PAULO      | SP     |
+|        19 | JOICE   | F    | JOICE@GMAIL.COM   | 55412256  | RES  | 77455786  | RUA GERONIMO          | CENTRO     | RIO DE JANEIRO | RJ     |
+|        19 | JOICE   | F    | JOICE@GMAIL.COM   | 55412256  | RES  | 89766554  | RUA GERONIMO          | CENTRO     | RIO DE JANEIRO | RJ     |
++-----------+---------+------+-------------------+-----------+------+-----------+-----------------------+------------+----------------+--------+
+                          
+
+                                 /* QUANTIDADE DE HOMENS E MULHERES */
+
+
+SELECT COUNT(*) AS QUANTIDADE,SEXO 
+FROM CLIENTE
+GROUP BY SEXO;
+
+
++------------+------+
+| QUANTIDADE | SEXO |
++------------+------+
+|         11 | F    |
+|          8 | M    |
++------------+------+
+
+
+                                /* RELATORIO DE HOMENS */
+
+
+SELECT 	CLIENTE.NOME, CLIENTE.SEXO, CLIENTE.EMAIL, CLIENTE.CPF, 
+		TELEFONE.TIPO, TELEFONE.NUMERO,
+		ENDERECO.RUA, ENDERECO.BAIRRO, ENDERECO.CIDADE, ENDERECO.ESTADO
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+WHERE SEXO = 'M';
+
++---------+------+-----------------+----------+------+-----------+--------------------+---------+----------------+--------+
+| NOME    | SEXO | EMAIL           | CPF      | TIPO | NUMERO    | RUA                | BAIRRO  | CIDADE         | ESTADO |
++---------+------+-----------------+----------+------+-----------+--------------------+---------+----------------+--------+
+| JOAO    | M    | JOAO@IG.COM     | 7887885  | CEL  | 412364887 | RUA CAPITAO HERMES | CENTRO  | RIO DE JANEIRO | RJ     |
+| JOAO    | M    | JOAO@IG.COM     | 7887885  | RES  | 789554123 | RUA CAPITAO HERMES | CENTRO  | RIO DE JANEIRO | RJ     |
+| JOAO    | M    | JOAO@IG.COM     | 7887885  | COM  | 413335485 | RUA CAPITAO HERMES | CENTRO  | RIO DE JANEIRO | RJ     |
+| CARLOS  | M    | CARLOS@IG.COM   | 9886844  | COM  | 123212254 | RUA ALFANDEGA      | ESTACIO | RIO DE JANEIRO | RJ     |
+| CARLOS  | M    | CARLOS@IG.COM   | 9886844  | CEL  | 123655584 | RUA ALFANDEGA      | ESTACIO | RIO DE JANEIRO | RJ     |
+| JORGE   | M    | JORGE@IG.COM    | 42555621 | CEL  | 898898855 | RUA URUGUAIANA     | CENTRO  | VITORIA        | ES     |
+| JORGE   | M    | JORGE@IG.COM    | 42555621 | RES  | 484848848 | RUA URUGUAIANA     | CENTRO  | VITORIA        | ES     |
+| JORGE   | M    | JORGE@IG.COM    | 42555621 | RES  | 999687441 | RUA URUGUAIANA     | CENTRO  | VITORIA        | ES     |
+| EDUARDO | M    | NULL            | 54376457 | COM  | 88965676  | RUA ARAUJO LIMA    | CENTRO  | VITORIA        | ES     |
+| ANTONIO | M    | ANTONIO@UOL.COM | 3423565  | CEL  | 89966809  | AV CAPITAO ANTUNES | CENTRO  | CURITIBA       | PR     |
+| ANTONIO | M    | ANTONIO@UOL.COM | 3423565  | RES  | 77755785  | AV CAPITAO ANTUNES | CENTRO  | CURITIBA       | PR     |
+| ANTONIO | M    | ANTONIO@UOL.COM | 3423565  | COM  | 44522578  | AV CAPITAO ANTUNES | CENTRO  | CURITIBA       | PR     |
++---------+------+-----------------+----------+------+-----------+--------------------+---------+----------------+--------+
+
+
+
+/* IDS E EMAIL DAS MULHERES QUE MORAM NO CENTRO DO RIO DE JANEIRO E
+NÃO TENHAM CELULAR */
+
+
+SELECT 	CLIENTE.IDCLIENTE, CLIENTE.NOME, CLIENTE.SEXO, CLIENTE.EMAIL,
+		ENDERECO.BAIRRO, ENDERECO.CIDADE,
+		TELEFONE.TIPO
+FROM CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+WHERE SEXO = 'F' AND (TIPO = 'RES' OR TIPO ='COM') AND BAIRRO = 'CENTRO' AND CIDADE ='RIO DE JANEIRO';
+
++-----------+-------+------+-----------------+--------+----------------+------+
+| IDCLIENTE | NOME  | SEXO | EMAIL           | BAIRRO | CIDADE         | TIPO |
++-----------+-------+------+-----------------+--------+----------------+------+
+|        19 | JOICE | F    | JOICE@GMAIL.COM | CENTRO | RIO DE JANEIRO | COM  |
+|        19 | JOICE | F    | JOICE@GMAIL.COM | CENTRO | RIO DE JANEIRO | RES  |
++-----------+-------+------+-----------------+--------+----------------+------+
+
+
+/* NOME, EMAIL E CELULAR DOS CLIENTES MORAM NO ESTADO DO RIO DE JANEIRO */
+
+SELECT 	CLIENTE.NOME, CLIENTE.EMAIL, 
+		TELEFONE.NUMERO AS CELULAR
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+WHERE TIPO ='CEL' AND ESTADO = 'RJ';
+
++---------+-------------------+-----------+
+| NOME    | EMAIL             | CELULAR   |
++---------+-------------------+-----------+
+| JOAO    | JOAO@IG.COM       | 412364887 |
+| CARLOS  | CARLOS@IG.COM     | 123655584 |
+| GIOVANA | NULL              | 99656675  |
+| KARLA   | KARLA@GMAIL.COM   | 55558887  |
+| DANIELE | DANIELE@GMAIL.COM | 33567765  |
+| DANIELE | DANIELE@GMAIL.COM | 88668786  |
++---------+-------------------+-----------+
+
+/* NOME, EMAIL, CELULAR DAS MULHERES QUE MORAM NO ESTADO DE SÃO PAULO */
+
+SELECT 	CLIENTE.NOME,CLIENTE.EMAIL, /* PROJEÇÃO */
+		TELEFONE.NUMERO AS CELULAR
+FROM CLIENTE    /* ORIGEM */
+INNER JOIN TELEFONE    /* JUNÇÃO */    
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO  /* JUNÇÃO */
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+WHERE SEXO = 'F' AND TIPO = 'CEL' AND ESTADO ='SP'; /* SELEÇÃO */
+
++------+------------+-----------+
+| NOME | EMAIL      | CELULAR   |
++------+------------+-----------+
+| ANA  | ANA@IG.COM | 133255485 |
+| ANA  | ANA@IG.COM | 465587823 |
++------+------------+-----------+
+
+
+/* NOME, EMAIL, NUMERO, ESTADO */ 
+
+SELECT  CLIENTE.NOME, CLIENTE.EMAIL,
+ 		TELEFONE.NUMERO, 
+ 		ENDERECO.ESTADO 		
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO 
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE;
+
++---------+-------------------+-----------+--------+
+| NOME    | EMAIL             | NUMERO    | ESTADO |
++---------+-------------------+-----------+--------+
+| JOAO    | JOAO@IG.COM       | 412364887 | RJ     |
+| JOAO    | JOAO@IG.COM       | 789554123 | RJ     |
+| JOAO    | JOAO@IG.COM       | 413335485 | RJ     |
+| ANA     | ANA@IG.COM        | 133255485 | SP     |
+| ANA     | ANA@IG.COM        | 465587823 | SP     |
+| CARLOS  | CARLOS@IG.COM     | 123212254 | RJ     |
+| CARLOS  | CARLOS@IG.COM     | 123655584 | RJ     |
+| JORGE   | JORGE@IG.COM      | 898898855 | ES     |
+| JORGE   | JORGE@IG.COM      | 484848848 | ES     |
+| JORGE   | JORGE@IG.COM      | 999687441 | ES     |
+| GIOVANA | NULL              | 68976565  | RJ     |
+| GIOVANA | NULL              | 99656675  | RJ     |
+| KARLA   | KARLA@GMAIL.COM   | 55558887  | RJ     |
+| DANIELE | DANIELE@GMAIL.COM | 33567765  | RJ     |
+| DANIELE | DANIELE@GMAIL.COM | 88668786  | RJ     |
+| DANIELE | DANIELE@GMAIL.COM | 55689654  | RJ     |
+| EDUARDO | NULL              | 88965676  | ES     |
+| ANTONIO | ANTONIO@UOL.COM   | 89966809  | PR     |
+| ANTONIO | ANTONIO@UOL.COM   | 77755785  | PR     |
+| ANTONIO | ANTONIO@UOL.COM   | 44522578  | PR     |
+| ELAINE  | ELAINE@GLOBO.COM  | 88679978  | SP     |
+| CARMEM  | CARMEM@IG.COM     | 99655768  | PR     |
+| ADRIANA | ADRIANA@GMAIL.COM | 89955665  | SP     |
+| JOICE   | JOICE@GMAIL.COM   | 77455786  | RJ     |
+| JOICE   | JOICE@GMAIL.COM   | 89766554  | RJ     |
++---------+-------------------+-----------+--------+
+
+                  -----------
+                    IFNULL
+                  -----------
+
+/* RETORNA ALGO QUANDO EXISTIR UM VALOR NULO */
+
+
+IFNULL('COLUNA','TEXTO SE NULO'),
+
+
+SELECT  CLIENTE.NOME, 
+ IFNULL(CLIENTE.EMAIL,'**********') AS 'EMAIL',
+ 		TELEFONE.NUMERO, 
+ 		ENDERECO.ESTADO 		
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO 
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE;
+
+
+                  -----------
+                     VIEW
+                  -----------
+
+
+/* NOME, SEXO , EMAIL , TIPO, NUMERO, BAIRRO , CIDADE, ESTADO */
+
+SELECT  CLIENTE.NOME, 
+		CLIENTE.SEXO,
+		CLIENTE.EMAIL,
+		TELEFONE.TIPO,
+	    TELEFONE.NUMERO,
+		ENDERECO.BAIRRO,
+	    ENDERECO.CIDADE,
+	    ENDERECO.ESTADO
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE;
+
+/* UM TIPO DE SUBROTINA */ 
+
+CREATE VIEW RELATORIO AS
+
+SELECT  CLIENTE.NOME, 
+		CLIENTE.SEXO,
+		CLIENTE.EMAIL,
+		TELEFONE.TIPO,
+	    TELEFONE.NUMERO,
+		ENDERECO.BAIRRO,
+	    ENDERECO.CIDADE,
+	    ENDERECO.ESTADO
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE;
+
+SELECT * FROM RELATORIO ;
+
+SHOW TABLES ; - > LOCALIZA VIEW
+
+/* APAGANDO UMA VIEW */ 
+
+DROP VIEW RELATORIO;
+
+
+/* INSERINDO PREFIXOS */
+
+CREATE VIEW V_RELATORIO AS /* DDL EM VIEW */
+
+SELECT  CLIENTE.NOME, 
+		CLIENTE.SEXO,
+		IFNULL(CLIENTE.EMAIL,'******') AS 'EMAIL',
+		TELEFONE.TIPO,
+	    TELEFONE.NUMERO,
+		ENDERECO.BAIRRO,
+	    ENDERECO.CIDADE,
+	    ENDERECO.ESTADO
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE;
+
+
+SELECT NOME, NUMERO, ESTADO 
+FROM V_RELATORIO;
+
+                    /* DML NAS VIEWS */ 
+
+INSERT INTO V_RELATORIO VALUES('ANDREIA','F','ANDREIA@UOL.COM','CEL','98956556','CENTRO','VITORIA','ES');
+/
+/
+ERROR 1394 (HY000): Can not insert into join view 'comercio.v_relatorio' without fields list
+
+/* NÃO É POSSÍVEL EXCLUIR SE A VIEW ESTIVER RELACIONADA, SE ESTIVER JUNÇÕES  */
+
+/* NÃO É POSSÍVEL INSERIR */
+
+/* É POSSÍVEL ALTERAR VIEWS, LEMBRANDO QUE, O QUE FOR ALTERADO NA VIEW SERÁ ALTERADA NA TABELA DE REGISTROS */
+-- NESTE CASO A TABELA CLIENTE, MAS SÓ MUDA O NOME 
+
+UPDATE V_RELATORIO 
+SET NOME = 'JOSE'
+WHERE NOME = 'JORGE';
+
+UPDATE V_RELATORIO 
+SET NOME = 'JORGE'
+WHERE NOME = 'JOSE';
+
+SELECT * FROM V_RELATORIO
+WHERE SEXO ='F';
+
+
+/* PARA COMANDOS DE DML, SÓ E POSSÍVEL FAZER SE AS MESMAS NÃO ESTIVEREM
+EM JUNÇÃO COM OUTRA TABELA */ -> INNER JOIN 
+/* ENTRETANTO, NA SITUAÇÃO DE JUNÇÃO É POSSÍVEL ALTERAR */ -> UPDATE
+
+
+
+CREATE TABLE JOGADORES(
+
+  IDJOGADORES INT,
+  NOME VARCHAR(30),
+  ESTADO CHAR(2)
+
+);
+
+INSERT INTO JOGADORES VALUES(1,'GUERRERO','RS');
+INSERT INTO JOGADORES VALUES(2,'MATEUS','SP');
+INSERT INTO JOGADORES VALUES(3,'GIOVANA','PR');
+INSERT INTO JOGADORES VALUES(4,'ISABELLA','BH');
+INSERT INTO JOGADORES VALUES(5,'RODRIGO','SP');
+
+
+CREATE VIEW V_JOGADORES AS 
+SELECT NOME,ESTADO
+FROM JOGADORES;
+
+
+DELETE FROM V_JOGADORES
+WHERE NOME ='GUERRERO';
+
+INSERT INTO V_JOGADORES VALUES('GUERRERO','RS');
+
+              /* ORDDER BY */ 
+
+CREATE TABLE ALUNOS(
+
+NUMERO INT,
+NOME VARCHAR(30)
+
+);
+
+INSERT INTO ALUNOS VALUES (1,'JOAO');
+INSERT INTO ALUNOS VALUES (1,'MARIA');
+INSERT INTO ALUNOS VALUES (2,'ZOE');
+INSERT INTO ALUNOS VALUES (2,'ANDRE');
+INSERT INTO ALUNOS VALUES (3,'CLARA');
+INSERT INTO ALUNOS VALUES (1,'CLARA');
+INSERT INTO ALUNOS VALUES (4,'MAFRA');
+INSERT INTO ALUNOS VALUES (5,'JANAINA');
+INSERT INTO ALUNOS VALUES (1,'JANAINA');
+INSERT INTO ALUNOS VALUES (3,'MARCELO');
+INSERT INTO ALUNOS VALUES (4,'GIOVANI');
+INSERT INTO ALUNOS VALUES (5,'ANTONIO');
+INSERT INTO ALUNOS VALUES (6,'ANA');
+INSERT INTO ALUNOS VALUES (6,'VIVIANE');
+
+/* ORDDENAR POR COLUNA */
+
+SELECT * FROM ALUNOS  -- > ORDENA POR NOME DA COLUNA 
+ORDER BY NUMERO;
+
+SELECT * FROM ALUNOS --> ORDENA PELA PRIMEIRA COLUNA 
+ORDER BY 1;
+ 
+SELECT * FROM ALUNOS --> ORDENA PELA SEGUNDA COLUNA, OU SEJA, POR NOME */
+ORDER BY 2;
+
+/* ORDENANDO POR MAIS DE UMA COLUNA */
+
+SELECT * FROM ALUNOS --> ORDENA POR NUMERO E EM ORDEM ALFABÉTICA
+ORDER BY NUMERO, NOME;
+
+SELECT * FROM ALUNOS --> ORDENA POR NUMERO E NOME POR NUMERO DE COLUNA
+ORDER BY 1,2;
+
+SELECT NOME   --> ORDENA POR NUMERO E NOME 
+FROM ALUNOS
+ORDER BY NUMERO, NOME;
+
+SELECT * FROM ALUNOS --> ORDENA PELA COLUNA 1 EM ORDEM ACENDENTE 1-6
+ORDER BY 1 ASC ;
+
+SELECT * FROM ALUNOS --> ORDENA PELA COLUNA 1 EM ORDEM DESCENDENTE 6-1
+ORDER BY 1 DESC;
+
+------------------- ORDER BY -----------------------
+
+SELECT * FROM ALUNOS  -- > ORDENA POR NOME DA COLUNA 
+ORDER BY NUMERO;
+
++--------+---------+
+| NUMERO | NOME    |
++--------+---------+
+|      1 | JOAO    |
+|      1 | MARIA   |
+|      1 | CLARA   |
+|      1 | JANAINA |
+|      2 | ZOE     |
+|      2 | ANDRE   |
+|      3 | CLARA   |
+|      3 | MARCELO |
+|      4 | MAFRA   |
+|      4 | GIOVANI |
+|      5 | JANAINA |
+|      5 | ANTONIO |
+|      6 | ANA     |
+|      6 | VIVIANE |
++--------+---------+
+
+SELECT * FROM ALUNOS  /* ORDENA PELA PRIMEIRA COLUNA */
+ORDER BY 1;
+
++--------+---------+
+| NUMERO | NOME    |
++--------+---------+
+|      1 | JOAO    |
+|      1 | MARIA   |
+|      1 | CLARA   |
+|      1 | JANAINA |
+|      2 | ZOE     |
+|      2 | ANDRE   |
+|      3 | CLARA   |
+|      3 | MARCELO |
+|      4 | MAFRA   |
+|      4 | GIOVANI |
+|      5 | JANAINA |
+|      5 | ANTONIO |
+|      6 | ANA     |
+|      6 | VIVIANE |
++--------+---------+
+ 
+SELECT * FROM ALUNOS  /* ORDENA PELA SEGUNDA COLUNA, OU SEJA, POR NOME */
+ORDER BY 2;
+
++--------+---------+
+| NUMERO | NOME    |
++--------+---------+
+|      6 | ANA     |
+|      2 | ANDRE   |
+|      5 | ANTONIO |
+|      3 | CLARA   |
+|      1 | CLARA   |
+|      4 | GIOVANI |
+|      5 | JANAINA |
+|      1 | JANAINA |
+|      1 | JOAO    |
+|      4 | MAFRA   |
+|      3 | MARCELO |
+|      1 | MARIA   |
+|      6 | VIVIANE |
+|      2 | ZOE     |
++--------+---------+
+
+
+SELECT * FROM ALUNOS  --> ORDENA POR NUMERO E CADA SET POR ORDEM ALFABÉTICA
+ORDER BY NUMERO, NOME;
+
++--------+---------+
+| NUMERO | NOME    |
++--------+---------+
+|      1 | CLARA   |
+|      1 | JANAINA |
+|      1 | JOAO    |
+|      1 | MARIA   |
+|      2 | ANDRE   |
+|      2 | ZOE     |
+|      3 | CLARA   |
+|      3 | MARCELO |
+|      4 | GIOVANI |
+|      4 | MAFRA   |
+|      5 | ANTONIO |
+|      5 | JANAINA |
+|      6 | ANA     |
+|      6 | VIVIANE |
++--------+---------+
+
+
+SELECT * FROM ALUNOS --> ORDENA PELA COLUNA 1 EM ORDEM ACENDENTE 1-6
+ORDER BY 1 ASC;
+
++--------+---------+
+| NUMERO | NOME    |
++--------+---------+
+|      1 | JOAO    |
+|      1 | MARIA   |
+|      1 | CLARA   |
+|      1 | JANAINA |
+|      2 | ZOE     |
+|      2 | ANDRE   |
+|      3 | CLARA   |
+|      3 | MARCELO |
+|      4 | MAFRA   |
+|      4 | GIOVANI |
+|      5 | JANAINA |
+|      5 | ANTONIO |
+|      6 | ANA     |
+|      6 | VIVIANE |
++--------+---------+
+
+SELECT * FROM ALUNOS --> ORDENA PELA COLUNA 1 EM ORDEM DESCENDENTE 6-1 
+ORDER BY 1 DESC;
+
++--------+---------+
+| NUMERO | NOME    |
++--------+---------+
+|      6 | ANA     |
+|      6 | VIVIANE |
+|      5 | JANAINA |
+|      5 | ANTONIO |
+|      4 | MAFRA   |
+|      4 | GIOVANI |
+|      3 | CLARA   |
+|      3 | MARCELO |
+|      2 | ZOE     |
+|      2 | ANDRE   |
+|      1 | JOAO    |
+|      1 | MARIA   |
+|      1 | CLARA   |
+|      1 | JANAINA |
++--------+---------+
+
+------------ ORDER BY COM JOIN ------------------
+
+CREATE VIEW V_RELATORIO AS /* DDL EM VIEW */
+
+SELECT  CLIENTE.NOME, 
+		CLIENTE.SEXO,
+		IFNULL(CLIENTE.EMAIL,'******') AS 'EMAIL',
+		TELEFONE.TIPO,
+	    TELEFONE.NUMERO,
+		ENDERECO.BAIRRO,
+	    ENDERECO.CIDADE
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+ORDER BY 1;   --> ORDENA PELA COLUNA 1. ORDENA POR NUMERO.
+
+ ORDER BY 1
+     /
+     /
+     V
++---------+------+-------------------+------+-----------+------------+----------------+
+| NOME    | SEXO | EMAIL             | TIPO | NUMERO    | BAIRRO     | CIDADE         |
++---------+------+-------------------+------+-----------+------------+----------------+
+| ADRIANA | F    | ADRIANA@GMAIL.COM | RES  | 89955665  | LAPA       | SAO PAULO      |
+| ANA     | F    | ANA@IG.COM        | CEL  | 133255485 | JARDINS    | SAO PAULO      |
+| ANA     | F    | ANA@IG.COM        | CEL  | 465587823 | JARDINS    | SAO PAULO      |
+| ANTONIO | M    | ANTONIO@UOL.COM   | COM  | 44522578  | CENTRO     | CURITIBA       |
+| ANTONIO | M    | ANTONIO@UOL.COM   | RES  | 77755785  | CENTRO     | CURITIBA       |
+| ANTONIO | M    | ANTONIO@UOL.COM   | CEL  | 89966809  | CENTRO     | CURITIBA       |
+| CARLOS  | M    | CARLOS@IG.COM     | CEL  | 123655584 | ESTACIO    | RIO DE JANEIRO |
+| CARLOS  | M    | CARLOS@IG.COM     | COM  | 123212254 | ESTACIO    | RIO DE JANEIRO |
+| CARMEM  | F    | CARMEM@IG.COM     | CEL  | 99655768  | BOM RETIRO | CURITIBA       |
+| DANIELE | F    | DANIELE@GMAIL.COM | COM  | 55689654  | COPACABANA | RIO DE JANEIRO |
+| DANIELE | F    | DANIELE@GMAIL.COM | CEL  | 88668786  | COPACABANA | RIO DE JANEIRO |
+| DANIELE | F    | DANIELE@GMAIL.COM | CEL  | 33567765  | COPACABANA | RIO DE JANEIRO |
+| EDUARDO | M    | ******            | COM  | 88965676  | CENTRO     | VITORIA        |
+| ELAINE  | F    | ELAINE@GLOBO.COM  | COM  | 88679978  | JARDINS    | SAO PAULO      |
+| GIOVANA | F    | ******            | RES  | 68976565  | ESTACIO    | RIO DE JANEIRO |
+| GIOVANA | F    | ******            | CEL  | 99656675  | ESTACIO    | RIO DE JANEIRO |
+| JOAO    | M    | JOAO@IG.COM       | RES  | 789554123 | CENTRO     | RIO DE JANEIRO |
+| JOAO    | M    | JOAO@IG.COM       | COM  | 413335485 | CENTRO     | RIO DE JANEIRO |
+| JOAO    | M    | JOAO@IG.COM       | CEL  | 412364887 | CENTRO     | RIO DE JANEIRO |
+| JOICE   | F    | JOICE@GMAIL.COM   | RES  | 89766554  | CENTRO     | RIO DE JANEIRO |
+| JOICE   | F    | JOICE@GMAIL.COM   | COM  | 77455786  | CENTRO     | RIO DE JANEIRO |
+| JORGE   | M    | JORGE@IG.COM      | CEL  | 898898855 | CENTRO     | VITORIA        |
+| JORGE   | M    | JORGE@IG.COM      | RES  | 999687441 | CENTRO     | VITORIA        |
+| JORGE   | M    | JORGE@IG.COM      | RES  | 484848848 | CENTRO     | VITORIA        |
+| KARLA   | F    | KARLA@GMAIL.COM   | CEL  | 55558887  | CENTRO     | RIO DE JANEIRO |
++---------+------+-------------------+------+-----------+------------+----------------+
+
+------------- ORDENAR POR VIEW --------------
+
+SELECT * FROM V_RELATORIO 
+ORDER BY 1;
+
+ORDER BY 1
+     /
+     /
+     V
++---------+------+-------------------+------+-----------+------------+----------------+--------+
+| NOME    | SEXO | EMAIL             | TIPO | NUMERO    | BAIRRO     | CIDADE         | ESTADO |
++---------+------+-------------------+------+-----------+------------+----------------+--------+
+| ADRIANA | F    | ADRIANA@GMAIL.COM | RES  | 89955665  | LAPA       | SAO PAULO      | SP     |
+| ANA     | F    | ANA@IG.COM        | CEL  | 465587823 | JARDINS    | SAO PAULO      | SP     |
+| ANA     | F    | ANA@IG.COM        | CEL  | 133255485 | JARDINS    | SAO PAULO      | SP     |
+| ANTONIO | M    | ANTONIO@UOL.COM   | COM  | 44522578  | CENTRO     | CURITIBA       | PR     |
+| ANTONIO | M    | ANTONIO@UOL.COM   | RES  | 77755785  | CENTRO     | CURITIBA       | PR     |
+| ANTONIO | M    | ANTONIO@UOL.COM   | CEL  | 89966809  | CENTRO     | CURITIBA       | PR     |
+| CARLOS  | M    | CARLOS@IG.COM     | CEL  | 123655584 | ESTACIO    | RIO DE JANEIRO | RJ     |
+| CARLOS  | M    | CARLOS@IG.COM     | COM  | 123212254 | ESTACIO    | RIO DE JANEIRO | RJ     |
+| CARMEM  | F    | CARMEM@IG.COM     | CEL  | 99655768  | BOM RETIRO | CURITIBA       | PR     |
+| DANIELE | F    | DANIELE@GMAIL.COM | COM  | 55689654  | COPACABANA | RIO DE JANEIRO | RJ     |
+| DANIELE | F    | DANIELE@GMAIL.COM | CEL  | 88668786  | COPACABANA | RIO DE JANEIRO | RJ     |
+| DANIELE | F    | DANIELE@GMAIL.COM | CEL  | 33567765  | COPACABANA | RIO DE JANEIRO | RJ     |
+| EDUARDO | M    | NULL              | COM  | 88965676  | CENTRO     | VITORIA        | ES     |
+| ELAINE  | F    | ELAINE@GLOBO.COM  | COM  | 88679978  | JARDINS    | SAO PAULO      | SP     |
+| GIOVANA | F    | NULL              | CEL  | 99656675  | ESTACIO    | RIO DE JANEIRO | RJ     |
+| GIOVANA | F    | NULL              | RES  | 68976565  | ESTACIO    | RIO DE JANEIRO | RJ     |
+| JOAO    | M    | JOAO@IG.COM       | RES  | 789554123 | CENTRO     | RIO DE JANEIRO | RJ     |
+| JOAO    | M    | JOAO@IG.COM       | CEL  | 412364887 | CENTRO     | RIO DE JANEIRO | RJ     |
+| JOAO    | M    | JOAO@IG.COM       | COM  | 413335485 | CENTRO     | RIO DE JANEIRO | RJ     |
+| JOICE   | F    | JOICE@GMAIL.COM   | RES  | 89766554  | CENTRO     | RIO DE JANEIRO | RJ     |
+| JOICE   | F    | JOICE@GMAIL.COM   | COM  | 77455786  | CENTRO     | RIO DE JANEIRO | RJ     |
+| JORGE   | M    | JORGE@IG.COM      | CEL  | 898898855 | CENTRO     | VITORIA        | ES     |
+| JORGE   | M    | JORGE@IG.COM      | RES  | 999687441 | CENTRO     | VITORIA        | ES     |
+| JORGE   | M    | JORGE@IG.COM      | RES  | 484848848 | CENTRO     | VITORIA        | ES     |
+| KARLA   | F    | KARLA@GMAIL.COM   | CEL  | 55558887  | CENTRO     | RIO DE JANEIRO | RJ     |
++---------+------+-------------------+------+-----------+------------+----------------+--------+
+
+-------------------------------------------------------------------------------------------------
+
+/* PROGRAMAÇÃO EM BANCO DE DADOS */
+
+
+                       -------------------
+                        STORED PROCEDURES
+                       -------------------
+
+DELIMITER $
+
+CREATE PROCEDURE NOME()
+BEGIN 
+
+     QUALQUER PROGRAMAÇÃO ; 
+
+END
+$
+
+
+CREATE PROCEDURE NOME_EMPRESA()
+BEGIN 
+
+   SELECT 'UNIVERSIDADE DOS DADOS' AS EMPRESA;
+
+END
+$
+
+/* CHAMANDO UMA PROCEDURE */ 
+
+CALL NOME_EMPRESA()$ OU ;
+
+/* CRIANDO */
+
+CREATE PROCEDURE CONTA()
+BEGIN 
+
+   SELECT 10 + 10 AS CONTA;
+
+ END
+ $
+
+/* APAGANDO PROCEDURE */
+
+DROP PROCEDURE CONTA()$
+
+
+CREATE PROCEDURE CONTA(NUMERO1 INT, NUMERO2 INT)
+BEGIN 
+ 
+       SELECT NUMERO1 + NUMERO2 AS CONTA;
+
+END
+$
+
+CALL CONTA(100,50)$  /* 100 É NÚMERO 1 E 50 NUMERO 2 */
+CALL CONTA(50,222)$
+CALL CONTA(584,121)$
+
+
+CREATE DATABASE PROJETO;
+
+USE PROJETO 
+
+CREATE TABLE CURSOS(
+
+	IDCURSOS INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30) NOT NULL,
+	HORAS INT(3) NOT NULL,
+	VALOR FLOAT(10,2) NOT NULL
+
+);
+
+INSERT INTO CURSOS VALUES(NULL,'JAVA','30',500.00);
+INSERT INTO CURSOS VALUES(NULL,'BANCO DE DADOS ','40',700.00);
+
+
+SELECT * FROM CURSOS
+
+CREATE PROCEDURE CAD_CURSO(P_NOME VARCHAR(30), 
+	                       P_HORAS INT(3),
+	                       P_VALOR FLOAT(10,2))
+BEGIN 
+
+	INSERT INTO CURSOS VALUES(NULL,P_NOME,P_HORAS,P_VALOR);
+
+
+END
+$
+
+CALL CAD_CURSO('BI SQL SERVER',35,3000);
+CALL CAD_CURSO('POWER BI',29,5000);
+CALL CAD_CURSO('TABLEAU',35,9000);
+
+
+/* A29 FUNCOES DE AGREGAÇAO */
+
+CREATE TABLE VENDEDORES(
+
+	IDVENDEDOR INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30),
+	SEXO CHAR(1),
+	JANEIRO FLOAT(10,2),
+	FEVEREIRO FLOAT(10,2),
+	MARCO FLOAT(10,2)
+);
+
+
+INSERT INTO VENDEDORES VALUES(NULL,'CARLOS','M',748151,45654,489546);
+INSERT INTO VENDEDORES VALUES(NULL,'JOANA','F',4846545,456464,25847);
+INSERT INTO VENDEDORES VALUES(NULL,'MARCELO','M',116544,154594,77786);
+INSERT INTO VENDEDORES VALUES(NULL,'JOAO','M',748151,45654,489546);
+INSERT INTO VENDEDORES VALUES(NULL,'PEDRO','M',745584,23564,415151);
+INSERT INTO VENDEDORES VALUES(NULL,'GABY','F',742133,32547,789545);
+INSERT INTO VENDEDORES VALUES(NULL,'SANDES','M',787878,69587,123212);
+INSERT INTO VENDEDORES VALUES(NULL,'GAAAF','M',484954,97451,323265);
+
+
+------------------------------------------
+---------- FUNÇÕES DE AGRAGAÇÃO ----------
+------------------------------------------
+
+
+
+            /* TRAZ O VALOR MÁXIMO DE UMA COLUNA */
+
+
+SELECT MAX(FEVEREIRO) AS MAIOR_FEV, NOME
+FROM VENDEDORES 
+WHERE SEXO = 'F';
+
+            /* TRAZ O MENOR VALOR DA COLUNA */
+
+
+SELECT NOME, MIN(FEVEREIRO) AS MENOR_FEV
+FROM VENDEDORES 
+WHERE SEXO = 'F';
+
+            /* TRAZ A MÉDIA DO VALORES */
+
+
+SELECT NOME, AVG(FEVEREIRO) AS MEDIA_FEV
+FROM VENDEDORES 
+WHERE SEXO ='F';
+
+            /* VÁRIAS FUNÇÕES */
+
+
+SELECT NOME, MAX(JANEIRO) AS MAIOR_JAN,
+   	   MIN(JANEIRO) AS MENOR_JAN,
+   	   AVG(JANEIRO) AS MEDIA_JANEIRO 
+
+FROM VENDEDORES 
+WHERE SEXO = 'F';
+
+            /* TRUNCATE */ 
+
+
+SELECT NOME, TRUNCATE(MAX(JANEIRO),2) AS MAIOR_JAN,
+   	   		 TRUNCATE(MIN(JANEIRO),2) AS MENOR_JAN,
+   	         TRUNCATE(AVG(JANEIRO),2) AS MEDIA_JANEIRO 
+
+FROM VENDEDORES 
+WHERE SEXO = 'F';
+
+
+                 /* SUM */
+
+-- SOMA O VALOR DE TODAS AS VENDAS 
+
+SELECT NOME, TRUNCATE(SUM(JANEIRO),2) AS TOTAL_JAN
+FROM VENDEDORES ; 
+
++--------+------------+
+| NOME   | TOTAL_JAN  |
++--------+------------+
+| CARLOS | 9219940.00 |
++--------+------------+
+
+SELECT NOME, TRUNCATE(SUM(JANEIRO),2) AS TOTAL_JAN,
+			 TRUNCATE(SUM(FEVEREIRO),2) AS TOTAL_FEV,
+			 TRUNCATE(SUM(MARCO),2) AS TOTAL_MARC
+
+FROM VENDEDORES ;
+
+/* VENDAS POR SEXO */
+
+SELECT SEXO , TRUNCATE(SUM(MARCO),2) AS TOTAL_MARCO
+FROM VENDEDORES
+GROUP BY SEXO; 
+
++------+-------------+
+| SEXO | TOTAL_MARCO |
++------+-------------+
+| F    |   815392.00 |
+| M    |  1918506.00 |
++------+-------------+
+
+
+----------------------------------------
+/* NOME DO VENDEDOR QUE VENDEU MENOS E MARCO 
+E VALOR */
+
+SELECT NOME, TRUNCATE(MIN(MARCO),2) AS MIN_VALOR_MARC
+FROM VENDEDORES ;
+
+/* CRIANDO SUBQUERIES */
+
+	SELECT NOME, MARCO 
+	FROM VENDEDORES 
+	WHERE MARCO = (SELECT TRUNCATE(MIN(MARCO),2) AS MIN_VALOR_MARC
+	FROM VENDEDORES);
+
++------------+---------+------+------------+-----------+-----------+
+| IDVENDEDOR | NOME    | SEXO | JANEIRO    | FEVEREIRO | MARCO     |
++------------+---------+------+------------+-----------+-----------+
+|          1 | CARLOS  | M    |  748151.00 |  45654.00 | 489546.00 |
+|          2 | JOANA   | F    | 4846545.00 | 456464.00 |  25847.00 |
+|          3 | MARCELO | M    |  116544.00 | 154594.00 |  77786.00 |
+|          4 | JOAO    | M    |  748151.00 |  45654.00 | 489546.00 |
+|          5 | PEDRO   | M    |  745584.00 |  23564.00 | 415151.00 |
+|          6 | GABY    | F    |  742133.00 |  32547.00 | 789545.00 |
+|          7 | SANDES  | M    |  787878.00 |  69587.00 | 123212.00 |
+|          8 | GAAAF   | M    |  484954.00 |  97451.00 | 323265.00 |
++------------+---------+------+------------+-----------+-----------+
+
+SELECT NOME, MARCO 
+FROM VENDEDORES 
+WHERE MARCO = (SELECT TRUNCATE(MAX(MARCO),2) AS MAIOR_VALOR
+FROM VENDEDORES);
+
++------+-----------+
+| NOME | MARCO     |
++------+-----------+
+| GABY | 789545.00 |
++------+-----------+
+
+SELECT NOME, MARCO
+FROM VENDEDORES
+WHERE MARCO > (SELECT TRUNCATE(AVG(MARCO),2) AS MAIOR_VALOR_MEDIA
+FROM VENDEDORES);
+
++--------+-----------+
+| NOME   | MARCO     |
++--------+-----------+
+| CARLOS | 489546.00 |
+| JOAO   | 489546.00 |
+| PEDRO  | 415151.00 |
+| GABY   | 789545.00 |
++--------+-----------+
+
+SELECT NOME, FEVEREIRO
+FROM VENDEDORES
+WHERE FEVEREIRO > (SELECT TRUNCATE(AVG(FEVEREIRO),2) AS MAIOR_VALOR_MEDIA
+FROM VENDEDORES);
+
++---------+-----------+
+| NOME    | FEVEREIRO |
++---------+-----------+
+| JOANA   | 456464.00 |
+| MARCELO | 154594.00 |
++---------+-----------+
+
+
+SELECT NOME, FEVEREIRO
+FROM VENDEDORES
+WHERE FEVEREIRO > (SELECT TRUNCATE(AVG(FEVEREIRO),2) AS MAIOR_VALOR_MEDIA
+FROM VENDEDORES);
+
+
+-----------------------------------------------------------------------------------
+                            COLUNA CALCULADA DE SOMA E MEDIA
+-----------------------------------------------------------------------------------
+
+USE VENDEDORES;
+
+SELECT NOME,VENDEDORES.JANEIRO, VENDEDORES.FEVEREIRO, VENDEDORES.MARCO,
+	    (VENDEDORES.JANEIRO + VENDEDORES.FEVEREIRO + VENDEDORES.MARCO) AS 'TOTAL',
+
+TRUNCATE((VENDEDORES.JANEIRO + VENDEDORES.FEVEREIRO + VENDEDORES.MARCO)/3,2) AS 'MEDIA'
+
+FROM VENDEDORES;
+
+
++---------+------------+-----------+-----------+------------+------------+
+| NOME    | JANEIRO    | FEVEREIRO | MARCO     | TOTAL      | MEDIA      |
++---------+------------+-----------+-----------+------------+------------+
+| CARLOS  |  748151.00 |  45654.00 | 489546.00 | 1283351.00 |  427783.66 |
+| JOANA   | 4846545.00 | 456464.00 |  25847.00 | 5328856.00 | 1776285.33 |
+| MARCELO |  116544.00 | 154594.00 |  77786.00 |  348924.00 |  116308.00 |
+| JOAO    |  748151.00 |  45654.00 | 489546.00 | 1283351.00 |  427783.66 |
+| PEDRO   |  745584.00 |  23564.00 | 415151.00 | 1184299.00 |  394766.33 |
+| GABY    |  742133.00 |  32547.00 | 789545.00 | 1564225.00 |  521408.33 |
+| SANDES  |  787878.00 |  69587.00 | 123212.00 |  980677.00 |  326892.33 |
+| GAAAF   |  484954.00 |  97451.00 | 323265.00 |  905670.00 |  301890.00 |
++---------+------------+-----------+-----------+------------+------------+
+
+
+-----------------------------------------------------------------------------------
+                       COLUNA CALCULADA DE SOMA, MEDIA E DESCONTO
+-----------------------------------------------------------------------------------
+
+
+
+SELECT   VENDEDORES.NOME, VENDEDORES.JANEIRO, VENDEDORES.FEVEREIRO, VENDEDORES.MARCO,
+	    (VENDEDORES.JANEIRO + VENDEDORES.FEVEREIRO + VENDEDORES.MARCO) AS 'SOMA',
+
+	    (VENDEDORES.JANEIRO + VENDEDORES.FEVEREIRO + VENDEDORES.MARCO) * .25 AS 'DESCONTO',
+
+TRUNCATE((VENDEDORES.JANEIRO + VENDEDORES.FEVEREIRO + VENDEDORES.MARCO)/3,2) AS 'MEDIA'
+
+
+FROM VENDEDORES;
+
++---------+------------+-----------+-----------+------------+------------+------------+
+| NOME    | JANEIRO    | FEVEREIRO | MARCO     | SOMA       | DESCONTO   | MEDIA      |
++---------+------------+-----------+-----------+------------+------------+------------+
+| CARLOS  |  748151.00 |  45654.00 | 489546.00 | 1283351.00 |  320837.75 |  427783.66 |
+| JOANA   | 4846545.00 | 456464.00 |  25847.00 | 5328856.00 | 1332214.00 | 1776285.33 |
+| MARCELO |  116544.00 | 154594.00 |  77786.00 |  348924.00 |   87231.00 |  116308.00 |
+| JOAO    |  748151.00 |  45654.00 | 489546.00 | 1283351.00 |  320837.75 |  427783.66 |
+| PEDRO   |  745584.00 |  23564.00 | 415151.00 | 1184299.00 |  296074.75 |  394766.33 |
+| GABY    |  742133.00 |  32547.00 | 789545.00 | 1564225.00 |  391056.25 |  521408.33 |
+| SANDES  |  787878.00 |  69587.00 | 123212.00 |  980677.00 |  245169.25 |  326892.33 |
+| GAAAF   |  484954.00 |  97451.00 | 323265.00 |  905670.00 |  226417.50 |  301890.00 |
++---------+------------+-----------+-----------+------------+------------+------------+
+
+
+
+-----------------------------------------------------------------------------------
+                                MODIFICANDO TABELAS
+-----------------------------------------------------------------------------------
+
+
+CREATE TABLE TABELA1 (
+
+	COLUNA1 VARCHAR(30),
+	COLUNA2 VARCHAR(30),
+	COLUNA3 VARCHAR(30)
+
+);
+
+	
+/* ADICIONANDO CHAVE PRIMÁRIA APÓS A CRIAÇÃO DA TABELA */
+
+ALTER TABLE TABELA1
+ADD PRIMARY KEY (COLUNA1);
+
+
+/* ADICIONANDO COLUNA APÓS A CRIAÇÃO DA TABELA 	*/
+
+ALTER TABLE TABELA1
+ADD COLUMN COLUNA5 VARCHAR(30) NOT NULL UNIQUE
+AFTER COLUNA4;
+
+ALTER TABLE TABELA1
+MODIFY COLUNA4 DATE NOT NULL;
+
+ALTER TABLE TABELA1
+MODIFY COLUNA1 INT NOT NULL ;
+
+
+-----------------------------------
+
+CREATE TABLE TIME(
+
+	IDTIME INT PRIMARY KEY AUTO_INCREMENT,
+	TIME VARCHAR(30),
+	ID_PESSOA VARCHAR(30)
+
+);
+
+
+ALTER TABLE TIME
+ADD FOREIGN KEY(ID_PESSOA)
+REFERENCES PESSOA(IDPESSOA);
+
+
+
+
+
+
+
+
+
+
+
+
