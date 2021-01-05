@@ -1,0 +1,2302 @@
+
+CREATE DATABASE COMERCIO ; 
+
+USE COMERCIO; 
+
+CREATE TABLE CLIENTE(
+
+	IDCLIENTE INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30) NOT NULL, 
+	SEXO ENUM('F','M') NOT NULL,
+	EMAIL VARCHAR(50) UNIQUE,
+	CPF VARCHAR(15) UNIQUE
+
+);
+
+CREATE TABLE ENDERECO(
+
+	IDENDERECO INT PRIMARY KEY AUTO_INCREMENT,
+	RUA VARCHAR(30) NOT NULL,
+	BAIRRO VARCHAR(30) NOT NULL,
+	CIDADE VARCHAR(30) NOT NULL,
+	ESTADO CHAR(2) NOT NULL,
+    
+	ID_CLIENTE INT UNIQUE,
+	FOREIGN KEY (ID_CLIENTE)
+	REFERENCES CLIENTE (IDCLIENTE)
+
+);
+
+CREATE TABLE TELEFONE(
+
+	IDTELEFONE INT PRIMARY KEY AUTO_INCREMENT,
+	TIPO ENUM('RES','COM','CEL') NOT NULL,
+	NUMERO VARCHAR(10) NOT NULL,
+
+	ID_CLIENTE INT,
+	FOREIGN KEY (ID_CLIENTE)
+	REFERENCES CLIENTE (IDCLIENTE)
+
+);
+
+/* ENDERECO -> OBRIGATORIO CADASTRO DE 1 */
+
+/* TELEFONE -> NÃO OBRIGATORIO (OPCIONAL) */
+
+/* EM RELACIONAMENTOS 1 X 1 A CHAVE ESTRANGEIRA
+FICA NA TABELA MAIS FRACA */ 
+
+/* EM RELACIONAMENTOS 1 X N A CHAVE ESTRANGEIRA
+FICA SEMPRE NA CARDINALIDADE N */
+
+/* A REGRA DO NEGÓCIO É DEFINIDA NA FOREIGN KEY,
+COM OU SEM A CLAUSULA UNIQUE 
+
+UNIQUE PARA CARDINALIDADE 1
+
+SE UNIQUE PARA CARDINALIDADE N
+
+*/
+
+--==========================================--
+-------------- TABELA CLIENTE ----------------
+--==========================================--
+
+
+INSERT INTO CLIENTE VALUES(NULL,'JOAO','M','JOAO@IG.COM','4844665654');
+INSERT INTO CLIENTE VALUES(NULL,'CARLOS','M','CARLOS@IG.COM','7854488745');
+INSERT INTO CLIENTE VALUES(NULL,'ANA','F','ANA@GMAIL.COM','2326565448');
+INSERT INTO CLIENTE VALUES(NULL,'CLARA','F',NULL,'555578484');
+INSERT INTO CLIENTE VALUES(NULL,'JORGE','M','JORGE@GMAIL.COM','211213884');
+INSERT INTO CLIENTE VALUES(NULL,'CELIA','F','CELIA@GMAIL.COM','444587745');
+
++-----------+--------+------+-----------------+------------+
+| IDCLIENTE | NOME   | SEXO | EMAIL           | CPF        |
++-----------+--------+------+-----------------+------------+
+|         1 | JOAO   | M    | JOAO@IG.COM     | 4844665654 |
+|         2 | CARLOS | M    | CARLOS@IG.COM   | 7854488745 |
+|         3 | ANA    | F    | ANA@GMAIL.COM   | 2326565448 |
+|         4 | CLARA  | F    | NULL            | 555578484  |
+|         5 | JORGE  | M    | JORGE@GMAIL.COM | 211213884  |
+|         6 | CELIA  | F    | CELIA@GMAIL.COM | 444587745  |
++-----------+--------+------+-----------------+------------+
+
+
+--============================================--
+-------------- TABELA ENDERECO -----------------
+--============================================--
+
+INSERT INTO ENDERECO VALUES(NULL,'RUA ANTONIO SA','CENTRO','B. HORIZONTO','MG',4);
+INSERT INTO ENDERECO VALUES(NULL,'RUA CAPITAO HERMES','CENTRO','RIO DE JANEIRO','RJ',1);
+INSERT INTO ENDERECO VALUES(NULL,'RUA PRES VARGAS','JARDINS','SÃO PAULO','SP',3);
+INSERT INTO ENDERECO VALUES(NULL,'RUA ALFANDEGA','ESTACIO','RIO DE JANEIRO','RJ',2);
+INSERT INTO ENDERECO VALUES(NULL,'RUA DO OUVIDOR','FLAMENGO','RIO DE JANEIRO','RJ',6);
+INSERT INTO ENDERECO VALUES(NULL,'RUA URUGUAIANA','CENTRO','VITORIA','ES',5);
+
++------------+--------------------+----------+----------------+--------+------------+
+| IDENDERECO | RUA                | BAIRRO   | CIDADE         | ESTADO | ID_CLIENTE |
++------------+--------------------+----------+----------------+--------+------------+
+|          1 | RUA ANTONIO SA     | CENTRO   | B. HORIZONTO   | MG     |          4 |
+|          2 | RUA CAPITAO HERMES | CENTRO   | RIO DE JANEIRO | RJ     |          1 |
+|          3 | RUA PRES VARGAS    | JARDINS  | SÃO PAULO      | SP     |          3 |
+|          4 | RUA ALFANDEGA      | ESTACIO  | RIO DE JANEIRO | RJ     |          2 |
+|          5 | RUA DO OUVIDOR     | FLAMENGO | RIO DE JANEIRO | RJ     |          6 |
+|          6 | RUA URUGUAIANA     | CENTRO   | VITORIA        | ES     |          5 |
++------------+--------------------+----------+----------------+--------+------------+
+
+
+--============================================--
+-------------- TABELA TELEFONE -----------------
+--============================================--
+
+INSERT INTO TELEFONE VALUES(NULL,'CEL','1121313232',5);
+INSERT INTO TELEFONE VALUES(NULL,'RES','2255985565',5);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','3235648785',1);
+INSERT INTO TELEFONE VALUES(NULL,'COM','7777888554',2);
+INSERT INTO TELEFONE VALUES(NULL,'RES','4454545644',1);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','3366585522',3);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','9878745415',3);
+INSERT INTO TELEFONE VALUES(NULL,'COM','1112000548',1);
+INSERT INTO TELEFONE VALUES(NULL,'RES','7778484544',5);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','9898989778',2);
+
+
++------------+------+------------+------------+
+| IDTELEFONE | TIPO | NUMERO     | ID_CLIENTE |
++------------+------+------------+------------+
+|          1 | CEL  | 1121313232 |          5 |
+|          2 | RES  | 2255985565 |          5 |
+|          3 | CEL  | 3235648785 |          1 |
+|          4 | COM  | 7777888554 |          2 |
+|          5 | RES  | 4454545644 |          1 |
+|          6 | CEL  | 3366585522 |          3 |
+|          7 | CEL  | 9878745415 |          3 |
+|          8 | COM  | 1112000548 |          1 |
+|          9 | RES  | 7778484544 |          5 |
+|         10 | CEL  | 9898989778 |          2 |
++------------+------+------------+------------+
+
+--============================================--
+-------------- TABELA TELEFONE -----------------
+--============================================--
+
+SELECT CLIENTE.NOME, CLIENTE.SEXO, CLIENTE.EMAIL
+FROM CLIENTE
+WHERE SEXO = 'F';
+
+SELECT TELEFONE.NUMERO
+FROM TELEFONE 
+WHERE TIPO = 'CEL';
+
+SELECT CLIENTE.NOME, CLIENTE.EMAIL, CLIENTE.IDCLIENTE
+FROM CLIENTE;
+
+SELECT ENDERECO.ID_CLIENTE, ENDERECO.BAIRRO, ENDERECO.CIDADE
+FROM ENDERECO;
+
+/* NOME, SEXO , BAIRRO E CIDADE DE TODOS OS CLIENTES */ 
+
+SELECT CLIENTE.NOME, CLIENTE.SEXO, ENDERECO.BAIRRO, ENDERECO.CIDADE /* PROJECAO */
+FROM CLIENTE /* ORIGEM */
+INNER JOIN ENDERECO /* JUNCAO */
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE /* JUNCAO */
+WHERE SEXO  ='F'; /* SELECAO */
+
+
+--============================================--
+------- NOME, SEXO, EMAIL, TIPO, NUMERO --------
+--============================================--
+
+SELECT CLIENTE.NOME, CLIENTE.SEXO, CLIENTE.EMAIL, TELEFONE.TIPO, TELEFONE.NUMERO
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+WHERE SEXO = 'F';
+
+--=========================================================================--
+------- NOME, SEXO, EMAIL, TIPO, NUMERO, RUA, BAIRRO, CIDADE, ESTADO --------
+--=========================================================================--
+
+SELECT 	CLIENTE.NOME, CLIENTE.SEXO, CLIENTE.EMAIL,
+		TELEFONE.TIPO, TELEFONE.NUMERO,
+		ENDERECO.RUA, ENDERECO.BAIRRO, ENDERECO.CIDADE, ENDERECO.ESTADO
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+WHERE SEXO = 'F' ;
+
+--============================================================================--
+------- LEFT JOIN - TRAZ TODOS OS DADOS INCLUINDO OS CAMPOS INEXISTENTES -------
+--============================================================================--
+
+SELECT CLIENTE.NOME, CLIENTE.SEXO, CLIENTE.EMAIL,
+	   TELEFONE.TIPO, TELEFONE.NUMERO, 
+	   ENDERECO.RUA, ENDERECO.BAIRRO, ENDERECO.CIDADE, ENDERECO.ESTADO
+
+FROM CLIENTE
+LEFT JOIN TELEFONE 
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+LEFT JOIN ENDERECO 
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+WHERE SEXO = 'F';
+
+--=========================================================--
+------- RIGHT JOIN - TRAZ SOMENTE OS DADOS EXISTENTES -------
+--=========================================================--
+
+SELECT CLIENTE.NOME, CLIENTE.SEXO, CLIENTE.EMAIL,
+	   TELEFONE.TIPO, TELEFONE.NUMERO, 
+	   ENDERECO.RUA, ENDERECO.BAIRRO, ENDERECO.CIDADE, ENDERECO.ESTADO
+
+FROM CLIENTE
+RIGHT JOIN TELEFONE 
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+RIGHT JOIN ENDERECO 
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+WHERE SEXO = 'F';
+
+--=========================================================================--
+----------------- NOME, SEXO, BAIRRO, CIDADE, TIPO, NUMERO ------------------
+--=========================================================================--
+
+SELECT 	CLIENTE.NOME, CLIENTE.SEXO, 
+		ENDERECO.BAIRRO, ENDERECO.CIDADE, 
+		TELEFONE.TIPO, TELEFONE.NUMERO
+FROM CLIENTE 
+INNER JOIN ENDERECO 
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE;
+
++--------+------+---------+----------------+------+------------+
+| NOME   | SEXO | BAIRRO  | CIDADE         | TIPO | NUMERO     |
++--------+------+---------+----------------+------+------------+
+| JORGE  | M    | CENTRO  | VITORIA        | CEL  | 1121313232 |
+| JORGE  | M    | CENTRO  | VITORIA        | RES  | 2255985565 |
+| JOAO   | M    | CENTRO  | RIO DE JANEIRO | CEL  | 3235648785 |
+| CARLOS | M    | ESTACIO | RIO DE JANEIRO | COM  | 7777888554 |
+| JOAO   | M    | CENTRO  | RIO DE JANEIRO | RES  | 4454545644 |
+| ANA    | F    | JARDINS | SÃO PAULO      | CEL  | 3366585522 |
+| ANA    | F    | JARDINS | SÃO PAULO      | CEL  | 9878745415 |
+| JOAO   | M    | CENTRO  | RIO DE JANEIRO | COM  | 1112000548 |
+| JORGE  | M    | CENTRO  | VITORIA        | RES  | 7778484544 |
+| CARLOS | M    | ESTACIO | RIO DE JANEIRO | CEL  | 9898989778 |
++--------+------+---------+----------------+------+------------+
+
+
+                           --======================--
+                           --========= DML ========--
+                           --======================--
+
+/*
+
+DML - DATA MANIPULATION LANGUAGE 
+DDL - DATA DEFINITION LANGUAGE
+DCL - DATA CONTROL LANGUAGE -> CONTROLE DE ACESSO AOS DADOS 
+TCL - TRANSACTION CONTROL LANGUAGE -> CONTROLE DE TRANSAÇÃO 
+
+*/
+
+                                ---- INSERT ---
+
+INSERT INTO CLIENTE VALUES(NULL,'PAULA','M',NULL,'87878464654');
+INSERT INTO ENDERECO VALUES(NULL,'RUA JOAQUIM SILVA','ALVORADA','NITEROI','RJ',7);
+
+
+                                ---- FILTRO ---
+
+
+SELECT * FROM CLIENTE 
+WHERE SEXO = 'M';
+
+                                ---- UPDATE ---
+
+-- SEMPRE FAZER UM SELECT ANTES DE UM UPDATE, PARA CONFERIR A CHAVE PRIMÁRIA E ALTERAR SOMENTE A CORRETA
+
++-----------+--------+------+-----------------+-------------+
+| IDCLIENTE | NOME   | SEXO | EMAIL           | CPF         |
++-----------+--------+------+-----------------+-------------+
+|         1 | JOAO   | M    | JOAO@IG.COM     | 4844665654  |
+|         2 | CARLOS | M    | CARLOS@IG.COM   | 7854488745  |
+|         3 | ANA    | F    | ANA@GMAIL.COM   | 2326565448  |
+|         4 | CLARA  | F    | NULL            | 555578484   |
+|         5 | JORGE  | M    | JORGE@GMAIL.COM | 211213884   |
+|         6 | CELIA  | F    | CELIA@GMAIL.COM | 444587745   |
+|         7 | PAULA  | M    | NULL            | 87878464654 |
++-----------+--------+------+-----------------+-------------+
+
+/* MUDA O SEXO DA PAULA PARA FEMININO 'F' */
+
+UPDATE CLIENTE
+SET SEXO = 'F'
+WHERE IDCLIENTE = 7; 
+
+
+                                ---- DELETE ---
+
+INSERT INTO CLIENTE VALUES(NULL, 'XXX', 'M',NULL, 'XXX');
+
+DELETE FROM CLIENTE
+WHERE IDCLIENTE = 8 ;
+
+ 
+                           --======================--
+                           --========= DDL ========--
+                           --======================--
+
+
+CREATE TABLE PRODUTO (
+
+	IDPRODUTO INT PRIMARY KEY AUTO_INCREMENT,
+	NOME_PRODUTO VARCHAR(30) NOT NULL,
+	PRECO INT,
+	FRETE FLOAT(10,2) NOT NULL
+);
+
+
+                              ---- ALTER TABLE ---
+
+                              ----   CHANGE ---
+
+
+/* ALTERANDO NOME DE UMA COLUNA - CHANGE */
+
+ALTER TABLE PRODUTO 
+CHANGE PRECO VALOR_UNITARIO INT NOT NULL;
+
+
+ALTER TABLE PRODUTO 
+CHANGE VALOR_UNITARIO PRECO_UNITARIO INT;
+
+
+
+/* ALTERANDO NOME DE UMA COLUNA - ALTER TABLE-TABELA + MODIFY */
+
+ ALTER TABLE PRODUTO 
+ MODIFY PRECO_UNITARIO VARCHAR(50) NOT NULL; 
+
+/* ADICIONANDO UMA COLUNA */
+
+ALTER TABLE PRODUTO
+ADD PESO FLOAT(10,2) NOT NULL; 
+
+/* APAGANDO UMA COLUNA */ 
+
+ALTER TABLE PRODUTO 
+DROP COLUMN PESO  ;
+
+/* ADICIONANDO AS COLUNAS EM ORDENS EXPECÍFICAS */
+
+
+ALTER TABLE PRODUTO 
+ADD COLUMN PESO FLOAT(10,2) NOT NULL
+AFTER NOME_PRODUTO; /* ADICIONANDO DEPOIS DO NOME_PRODUTO */
+
+
+ALTER TABLE PRODUTO 
+ADD COLUMN PESO FLOAT(10,2) NOT NULL
+FIRST;  /* ADICIONANDO A TABELA PESO COMO 1º COLUNA */
+
+ALTER TABLE PRODUTO
+DROP COLUMN PESO ;
+
+
+ALTER TABLE PRODUTO 
+DROP COLUMN PESO ;
+
+
+--===============================================================--
+                       /* EXERCICIOS DML */
+--=================================================================
+
+CREATE DATABASE COMERCIO;
+
+USE COMERCIO;
+
+SHOW DATABASES; --> OPCIONAL
+
+DROP TABLE CLIENTE;
+
+CREATE TABLE CLIENTE(
+	IDCLIENTE INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30) NOT NULL,
+	SEXO ENUM('M','F') NOT NULL,
+	EMAIL VARCHAR(50) UNIQUE,
+	CPF VARCHAR(15) UNIQUE
+);
+
+CREATE TABLE ENDERECO(
+	IDENDERECO INT PRIMARY KEY AUTO_INCREMENT, 
+	RUA VARCHAR(30) NOT NULL,
+	BAIRRO VARCHAR(30) NOT NULL,
+	CIDADE VARCHAR(30) NOT NULL,
+	ESTADO CHAR(2) NOT NULL,
+	ID_CLIENTE INT UNIQUE,
+
+	FOREIGN KEY(ID_CLIENTE)
+	REFERENCES CLIENTE(IDCLIENTE)
+);
+
+CREATE TABLE TELEFONE(
+	IDTELEFONE INT PRIMARY KEY AUTO_INCREMENT, 
+	TIPO ENUM('RES','COM','CEL') NOT NULL,
+	NUMERO VARCHAR(10) NOT NULL,
+	ID_CLIENTE INT,
+
+	FOREIGN KEY(ID_CLIENTE)
+	REFERENCES CLIENTE(IDCLIENTE)
+);
+
+INSERT INTO CLIENTE VALUES(NULL,'FLAVIO','M','FLAVIO@IG.COM','4657765');
+INSERT INTO CLIENTE VALUES(NULL,'ANDRE','M','ANDRE@GLOBO.COM','7687567');
+INSERT INTO CLIENTE VALUES(NULL,'GIOVANA','F',NULL,'0876655');
+INSERT INTO CLIENTE VALUES(NULL,'KARLA','M','KARLA@GMAIL.COM','545676778');
+INSERT INTO CLIENTE VALUES(NULL,'DANIELE','M','DANIELE@GMAIL.COM','43536789');
+INSERT INTO CLIENTE VALUES(NULL,'LORENA','M',NULL,'774557887');
+INSERT INTO CLIENTE VALUES(NULL,'EDUARDO','M',NULL,'54376457');
+INSERT INTO CLIENTE VALUES(NULL,'ANTONIO','F','ANTONIO@IG.COM','12436767');
+INSERT INTO CLIENTE VALUES(NULL,'ANTONIO','M','ANTONIO@UOL.COM','3423565');
+INSERT INTO CLIENTE VALUES(NULL,'ELAINE','M','ELAINE@GLOBO.COM','32567763');
+INSERT INTO CLIENTE VALUES(NULL,'CARMEM','M','CARMEM@IG.COM','787832213');
+INSERT INTO CLIENTE VALUES(NULL,'ADRIANA','F','ADRIANA@GMAIL.COM','88556942');
+INSERT INTO CLIENTE VALUES(NULL,'JOICE','F','JOICE@GMAIL.COM','55412256');
+
+/* CADASTRE UM ENDERECO PARA CADA CLIENTE */
+
+INSERT INTO ENDERECO VALUES(NULL,'RUA GUEDES','CASCADURA','B. HORIZONTE','MG',1);
+INSERT INTO ENDERECO VALUES(NULL,'RUA MAIA LACERDA','ESTACIO','RIO DE JANEIRO','RJ',2);
+INSERT INTO ENDERECO VALUES(NULL,'RUA VISCONDESSA','CENTRO','RIO DE JANEIRO','RJ',3);
+INSERT INTO ENDERECO VALUES(NULL,'RUA NELSON MANDELA','COPACABANA','RIO DE JANEIRO','RJ',4);
+INSERT INTO ENDERECO VALUES(NULL,'RUA ARAUJO LIMA','CENTRO','VITORIA','ES',5);
+INSERT INTO ENDERECO VALUES(NULL,'RUA CASTRO ALVES','LEBLON','RIO DE JANEIRO','RJ',6);
+INSERT INTO ENDERECO VALUES(NULL,'AV CAPITAO ANTUNES','CENTRO','CURITIBA','PR',7);
+INSERT INTO ENDERECO VALUES(NULL,'AV CARLOS BARROSO','JARDINS','SAO PAULO','SP',8);
+INSERT INTO ENDERECO VALUES(NULL,'ALAMEDA SAMPAIO','BOM RETIRO','CURITIBA','PR',9);
+INSERT INTO ENDERECO VALUES(NULL,'RUA DA LAPA','LAPA','SAO PAULO','SP',10);
+INSERT INTO ENDERECO VALUES(NULL,'RUA GERONIMO','CENTRO','RIO DE JANEIRO','RJ',11);
+INSERT INTO ENDERECO VALUES(NULL,'RUA GOMES FREIRE','CENTRO','RIO DE JANEIRO','RJ',12);
+
+/* CADASTRE TELEFONES PARA OS CLIENTES */
+
+
+INSERT INTO TELEFONE VALUES(NULL,'RES','68976565',1);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','99656675',1);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','33567765',2);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','88668786',2);
+INSERT INTO TELEFONE VALUES(NULL,'COM','55689654',2);
+INSERT INTO TELEFONE VALUES(NULL,'COM','88687979',3);
+INSERT INTO TELEFONE VALUES(NULL,'COM','88965676',4);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','89966809',5);
+INSERT INTO TELEFONE VALUES(NULL,'COM','88679978',6);
+INSERT INTO TELEFONE VALUES(NULL,'CEL','99655768',7);
+INSERT INTO TELEFONE VALUES(NULL,'RES','89955665',8);
+INSERT INTO TELEFONE VALUES(NULL,'RES','77455786',9);
+INSERT INTO TELEFONE VALUES(NULL,'RES','89766554',9);
+INSERT INTO TELEFONE VALUES(NULL,'RES','77755785',10);
+INSERT INTO TELEFONE VALUES(NULL,'COM','44522578',20);
+
+/* RELATORIO GERAL DOS CLIENTES */
+
+
+SELECT CLIENTE.IDCLIENTE, CLIENTE.NOME, CLIENTE.SEXO, CLIENTE.EMAIL, CLIENTE.CPF,
+		ENDERECO.RUA, ENDERECO.BAIRRO, ENDERECO.CIDADE, ENDERECO.ESTADO,
+		TELEFONE.TIPO, TELEFONE.NUMERO
+
+FROM CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE;
+
++-----------+---------+------+-------------------+------------+--------------------+------------+----------------+--------+------+------------+
+| IDCLIENTE | NOME    | SEXO | EMAIL             | CPF        | RUA                | BAIRRO     | CIDADE         | ESTADO | TIPO | NUMERO     |
++-----------+---------+------+-------------------+------------+--------------------+------------+----------------+--------+------+------------+
+|         5 | JORGE   | M    | JORGE@GMAIL.COM   | 211213884  | RUA URUGUAIANA     | CENTRO     | VITORIA        | ES     | CEL  | 1121313232 |
+|         5 | JORGE   | M    | JORGE@GMAIL.COM   | 211213884  | RUA URUGUAIANA     | CENTRO     | VITORIA        | ES     | RES  | 2255985565 |
+|         1 | JOAO    | M    | JOAO@IG.COM       | 4844665654 | RUA CAPITAO HERMES | CENTRO     | RIO DE JANEIRO | RJ     | CEL  | 3235648785 |
+|         2 | CARLOS  | M    | CARLOS@IG.COM     | 7854488745 | RUA ALFANDEGA      | ESTACIO    | RIO DE JANEIRO | RJ     | COM  | 7777888554 |
+|         1 | JOAO    | M    | JOAO@IG.COM       | 4844665654 | RUA CAPITAO HERMES | CENTRO     | RIO DE JANEIRO | RJ     | RES  | 4454545644 |
+|         3 | ANA     | F    | ANA@GMAIL.COM     | 2326565448 | RUA PRES VARGAS    | JARDINS    | SÃO PAULO      | SP     | CEL  | 3366585522 |
+|         3 | ANA     | F    | ANA@GMAIL.COM     | 2326565448 | RUA PRES VARGAS    | JARDINS    | SÃO PAULO      | SP     | CEL  | 9878745415 |
+|         1 | JOAO    | M    | JOAO@IG.COM       | 4844665654 | RUA CAPITAO HERMES | CENTRO     | RIO DE JANEIRO | RJ     | COM  | 1112000548 |
+|         5 | JORGE   | M    | JORGE@GMAIL.COM   | 211213884  | RUA URUGUAIANA     | CENTRO     | VITORIA        | ES     | RES  | 7778484544 |
+|         2 | CARLOS  | M    | CARLOS@IG.COM     | 7854488745 | RUA ALFANDEGA      | ESTACIO    | RIO DE JANEIRO | RJ     | CEL  | 9898989778 |
+|         9 | ANDRE   | M    | ANDRE@GLOBO.COM   | 7687567    | RUA GUEDES         | CASCADURA  | B. HORIZONTE   | MG     | RES  | 68976565   |
+|         9 | ANDRE   | M    | ANDRE@GLOBO.COM   | 7687567    | RUA GUEDES         | CASCADURA  | B. HORIZONTE   | MG     | CEL  | 99656675   |
+|        11 | KARLA   | M    | KARLA@GMAIL.COM   | 545676778  | RUA VISCONDESSA    | CENTRO     | RIO DE JANEIRO | RJ     | CEL  | 33567765   |
+|        11 | KARLA   | M    | KARLA@GMAIL.COM   | 545676778  | RUA VISCONDESSA    | CENTRO     | RIO DE JANEIRO | RJ     | CEL  | 88668786   |
+|        11 | KARLA   | M    | KARLA@GMAIL.COM   | 545676778  | RUA VISCONDESSA    | CENTRO     | RIO DE JANEIRO | RJ     | COM  | 55689654   |
+|        12 | DANIELE | M    | DANIELE@GMAIL.COM | 43536789   | RUA NELSON MANDELA | COPACABANA | RIO DE JANEIRO | RJ     | COM  | 88687979   |
+|        13 | LORENA  | M    | NULL              | 774557887  | RUA ARAUJO LIMA    | CENTRO     | VITORIA        | ES     | COM  | 88965676   |
+|        15 | ANTONIO | F    | ANTONIO@IG.COM    | 12436767   | AV CAPITAO ANTUNES | CENTRO     | CURITIBA       | PR     | CEL  | 89966809   |
+|        16 | ANTONIO | M    | ANTONIO@UOL.COM   | 3423565    | AV CARLOS BARROSO  | JARDINS    | SAO PAULO      | SP     | COM  | 88679978   |
+|        17 | ELAINE  | M    | ELAINE@GLOBO.COM  | 32567763   | ALAMEDA SAMPAIO    | BOM RETIRO | CURITIBA       | PR     | CEL  | 99655768   |
+|        18 | CARMEM  | M    | CARMEM@IG.COM     | 787832213  | RUA DA LAPA        | LAPA       | SAO PAULO      | SP     | RES  | 89955665   |
+|        19 | ADRIANA | F    | ADRIANA@GMAIL.COM | 88556942   | RUA GERONIMO       | CENTRO     | RIO DE JANEIRO | RJ     | RES  | 77455786   |
+|        19 | ADRIANA | F    | ADRIANA@GMAIL.COM | 88556942   | RUA GERONIMO       | CENTRO     | RIO DE JANEIRO | RJ     | RES  | 89766554   |
+|        20 | JOICE   | F    | JOICE@GMAIL.COM   | 55412256   | RUA GOMES FREIRE   | CENTRO     | RIO DE JANEIRO | RJ     | RES  | 77755785   |
+|        20 | JOICE   | F    | JOICE@GMAIL.COM   | 55412256   | RUA GOMES FREIRE   | CENTRO     | RIO DE JANEIRO | RJ     | COM  | 44522578   |
++-----------+---------+------+-------------------+------------+--------------------+------------+----------------+--------+------+------------+
+
+
+--=========================================================--
+                  /* RELATORIO DE HOMENS */
+--=========================================================--
+
+
+SELECT 	CLIENTE.IDCLIENTE, CLIENTE.NOME, CLIENTE.SEXO, CLIENTE.EMAIL, CLIENTE.CPF,
+		ENDERECO.RUA, ENDERECO.BAIRRO, ENDERECO.CIDADE, ENDERECO.ESTADO,
+		TELEFONE.TIPO, TELEFONE.NUMERO
+
+FROM CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+WHERE SEXO = 'M';
+
+SELECT * FROM CLIENTE
+WHERE SEXO = 'M';
+
++-----------+---------+------+-----------------+------------+
+| IDCLIENTE | NOME    | SEXO | EMAIL           | CPF        |
++-----------+---------+------+-----------------+------------+
+|         1 | JOAO    | M    | JOAO@IG.COM     | 4844665654 |
+|         2 | CARLOS  | M    | CARLOS@IG.COM   | 7854488745 |
+|         5 | JORGE   | M    | JORGE@GMAIL.COM | 211213884  |
+|         8 | FLAVIO  | M    | FLAVIO@IG.COM   | 4657765    |
+|         9 | ANDRE   | M    | ANDRE@GLOBO.COM | 7687567    |
+|        14 | EDUARDO | M    | NULL            | 54376457   |
+|        15 | ANTONIO | M    | ANTONIO@IG.COM  | 12436767   |
+|        16 | ANTONIO | M    | ANTONIO@UOL.COM | 3423565    |
++-----------+---------+------+-----------------+------------+
+
+UPDATE CLIENTE /* TROCA O SEXO DA KARLA PARA FEMININO */
+SET SEXO ='F'
+WHERE IDCLIENTE = 11;
+
+UPDATE CLIENTE /* TROCA O SEXO DA DANIELE PARA FEMININO */
+SET SEXO = 'F'
+WHERE IDCLIENTE = 12 ; 
+
+UPDATE CLIENTE /* TROCA O SEXO DA LORENA PARA FEMININO */ 
+SET SEXO = 'F'
+WHERE IDCLIENTE = 13;
+
+UPDATE CLIENTE  /* TROCA O SEXO DA ELAINE PARA FEMININO */
+SET SEXO = 'F'
+WHERE IDCLIENTE = 17 ; 
+
+UPDATE CLIENTE /* TROCA O SEXO DA CARMEM PARA FEMININO */
+SET SEXO ='F'
+WHERE IDCLIENTE = 18;
+
+UPDATE CLIENTE
+SET SEXO = 'F'
+WHERE IDCLIENTE IN(11,12,13,17,18);
+
+--=========================================================--
+                  /* RELATORIO DE MULHERES */
+--=========================================================--
+
+SELECT 	CLIENTE.IDCLIENTE, CLIENTE.NOME, CLIENTE.SEXO, CLIENTE.EMAIL, CLIENTE.CPF,
+		ENDERECO.RUA, ENDERECO.BAIRRO, ENDERECO.CIDADE, ENDERECO.ESTADO,
+		TELEFONE.TIPO, TELEFONE.NUMERO
+FROM CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+WHERE SEXO = 'F';
+
+SELECT * FROM CLIENTE
+WHERE SEXO = 'F';
+
++-----------+---------+------+-------------------+-------------+
+| IDCLIENTE | NOME    | SEXO | EMAIL             | CPF         |
++-----------+---------+------+-------------------+-------------+
+|         3 | ANA     | F    | ANA@GMAIL.COM     | 2326565448  |
+|         4 | CLARA   | F    | NULL              | 555578484   |
+|         6 | CELIA   | F    | CELIA@GMAIL.COM   | 444587745   |
+|         7 | PAULA   | F    | NULL              | 87878464654 |
+|        10 | GIOVANA | F    | NULL              | 0876655     |
+|        11 | KARLA   | F    | KARLA@GMAIL.COM   | 545676778   |
+|        12 | DANIELE | F    | DANIELE@GMAIL.COM | 43536789    |
+|        13 | LORENA  | F    | NULL              | 774557887   |
+|        17 | ELAINE  | F    | ELAINE@GLOBO.COM  | 32567763    |
+|        18 | CARMEM  | F    | CARMEM@IG.COM     | 787832213   |
+|        19 | ADRIANA | F    | ADRIANA@GMAIL.COM | 88556942    |
+|        20 | JOICE   | F    | JOICE@GMAIL.COM   | 55412256    |
++-----------+---------+------+-------------------+-------------+
+
+SELECT * FROM CLIENTE
+WHERE SEXO = 'F';
+
+UPDATE CLIENTE /* TROCA O SEXO DO ANTONIO PARA MASCULINO */
+SET SEXO = 'M'
+WHERE IDCLIENTE = 15;
+
+
+/* QUANTIDADE DE HOMENS E MULHERES */
+
+SELECT COUNT(*) AS QUANTIDADE, SEXO
+FROM CLIENTE
+GROUP BY SEXO; 
+
++------+------------+
+| SEXO | QUANTIDADE |
++------+------------+
+| F    |         12 |
+| M    |          8 |
++------+------------+
+
+
+
+/* IDS E EMAIL DAS MULHERES QUE MOREM NO CENTRO DO RIO DE JANEIRO E NAO TENHAM CELULAR */
+
+SELECT 	CLIENTE.IDCLIENTE, CLIENTE.EMAIL,
+		ENDERECO.BAIRRO, ENDERECO.CIDADE,
+		TELEFONE.TIPO, TELEFONE.NUMERO
+
+FROM CLIENTE
+INNER JOIN ENDERECO 
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+WHERE SEXO ='F' AND BAIRRO = 'CENTRO' AND CIDADE = 'RIO DE JANEIRO' AND ( TIPO = 'COM' OR TIPO ='RES');
+
++-----------+-------------------+--------+----------------+------+----------+
+| IDCLIENTE | EMAIL             | BAIRRO | CIDADE         | TIPO | NUMERO   |
++-----------+-------------------+--------+----------------+------+----------+
+|        11 | KARLA@GMAIL.COM   | CENTRO | RIO DE JANEIRO | COM  | 55689654 |
+|        19 | ADRIANA@GMAIL.COM | CENTRO | RIO DE JANEIRO | RES  | 77455786 |
+|        19 | ADRIANA@GMAIL.COM | CENTRO | RIO DE JANEIRO | RES  | 89766554 |
+|        20 | JOICE@GMAIL.COM   | CENTRO | RIO DE JANEIRO | RES  | 77755785 |
+|        20 | JOICE@GMAIL.COM   | CENTRO | RIO DE JANEIRO | COM  | 44522578 |
++-----------+-------------------+--------+----------------+------+----------+
+
+
+/* PARA UMA CAMPANHA DE MARKETING, O SETOR SOLICITOU UM 
+RELATÓRIO COM NOME, EMAIL E TELEFONE CELULAR DOS CLIENTES
+QUE MORAM NO ESTADO DO RIO DE JANEIRO, VOCE TERÁ QUE PASSAR
+A QUERY PARA GERAR O RELATÓRIO PARA O PROGRAMADOR */
+
+SELECT  CLIENTE.NOME, CLIENTE.EMAIL,
+		TELEFONE.TIPO,TELEFONE.NUMERO,
+		ENDERECO.ESTADO
+
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+WHERE TIPO = 'CEL' AND ESTADO ='RJ';
+
++--------+-----------------+------+------------+--------+
+| NOME   | EMAIL           | TIPO | NUMERO     | ESTADO |
++--------+-----------------+------+------------+--------+
+| JOAO   | JOAO@IG.COM     | CEL  | 3235648785 | RJ     |
+| CARLOS | CARLOS@IG.COM   | CEL  | 9898989778 | RJ     |
+| KARLA  | KARLA@GMAIL.COM | CEL  | 33567765   | RJ     |
+| KARLA  | KARLA@GMAIL.COM | CEL  | 88668786   | RJ     |
++--------+-----------------+------+------------+--------+
+
+/* PARA UMA CAMPANHA DE PRODUTOS DE BELEZA, O COMERCIAL SOLICTIOU UM
+REALTÓRIO COM O NOME, EMAIL E TELEFONE CELULAR DAS MULHERES QUE 
+MORAM NO ESTADO DE SÃO PAULO */
+
+SELECT 	CLIENTE.NOME, CLIENTE.EMAIL, CLIENTE.SEXO,
+		TELEFONE.TIPO, TELEFONE.NUMERO,
+		ENDERECO.ESTADO
+
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE
+WHERE SEXO ='F' AND ESTADO ='SP' AND TIPO ='CEL';
+
++------+---------------+------+------+------------+--------+
+| NOME | EMAIL         | SEXO | TIPO | NUMERO     | ESTADO |
++------+---------------+------+------+------------+--------+
+| ANA  | ANA@GMAIL.COM | F    | CEL  | 3366585522 | SP     |
+| ANA  | ANA@GMAIL.COM | F    | CEL  | 9878745415 | SP     |
++------+---------------+------+------+------------+--------+
+
+
+--=========================================================--
+                  /* SELEÇÃO CONDICIONAL */
+--=========================================================--
+
+
+/* NOME, EMAIL, NUMERO E ESTADO */
+
+
+SELECT 	CLIENTE.NOME, 
+        CLIENTE.EMAIL,
+		TELEFONE.NUMERO,
+		ENDERECO.ESTADO 
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE;
+
+
++---------+-------------------+------------+--------+
+| NOME    | EMAIL             | NUMERO     | ESTADO |
++---------+-------------------+------------+--------+
+| JORGE   | JORGE@GMAIL.COM   | 1121313232 | ES     |
+| JORGE   | JORGE@GMAIL.COM   | 2255985565 | ES     |
+| JOAO    | JOAO@IG.COM       | 3235648785 | RJ     |
+| CARLOS  | CARLOS@IG.COM     | 7777888554 | RJ     |
+| JOAO    | JOAO@IG.COM       | 4454545644 | RJ     |
+| ANA     | ANA@GMAIL.COM     | 3366585522 | SP     |
+| ANA     | ANA@GMAIL.COM     | 9878745415 | SP     |
+| JOAO    | JOAO@IG.COM       | 1112000548 | RJ     |
+| JORGE   | JORGE@GMAIL.COM   | 7778484544 | ES     |
+| CARLOS  | CARLOS@IG.COM     | 9898989778 | RJ     |
+| ANDRE   | ANDRE@GLOBO.COM   | 68976565   | MG     |
+| ANDRE   | ANDRE@GLOBO.COM   | 99656675   | MG     |
+| KARLA   | KARLA@GMAIL.COM   | 33567765   | RJ     |
+| KARLA   | KARLA@GMAIL.COM   | 88668786   | RJ     |
+| KARLA   | KARLA@GMAIL.COM   | 55689654   | RJ     |
+| DANIELE | DANIELE@GMAIL.COM | 88687979   | RJ     |
+| LORENA  | NULL              | 88965676   | ES     |
+| ANTONIO | ANTONIO@IG.COM    | 89966809   | PR     |
+| ANTONIO | ANTONIO@UOL.COM   | 88679978   | SP     |
+| ELAINE  | ELAINE@GLOBO.COM  | 99655768   | PR     |
+| CARMEM  | CARMEM@IG.COM     | 89955665   | SP     |
+| ADRIANA | ADRIANA@GMAIL.COM | 77455786   | RJ     |
+| ADRIANA | ADRIANA@GMAIL.COM | 89766554   | RJ     |
+| JOICE   | JOICE@GMAIL.COM   | 77755785   | RJ     |
+| JOICE   | JOICE@GMAIL.COM   | 44522578   | RJ     |
++---------+-------------------+------------+--------+
+
+
+SELECT 	
+		CLIENTE.NOME, 
+        IFNULL(CLIENTE.EMAIL,'**********') AS EMAIL,
+		IFNULL(TELEFONE.NUMERO,'**********') AS NUMERO,
+		ENDERECO.ESTADO 
+
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE;
+
+
++---------+-------------------+------------+--------+
+| NOME    | EMAIL             | NUMERO     | ESTADO |
++---------+-------------------+------------+--------+
+| JORGE   | JORGE@GMAIL.COM   | 1121313232 | ES     |
+| JORGE   | JORGE@GMAIL.COM   | 2255985565 | ES     |
+| JOAO    | JOAO@IG.COM       | 3235648785 | RJ     |
+| CARLOS  | CARLOS@IG.COM     | 7777888554 | RJ     |
+| JOAO    | JOAO@IG.COM       | 4454545644 | RJ     |
+| ANA     | ANA@GMAIL.COM     | 3366585522 | SP     |
+| ANA     | ANA@GMAIL.COM     | 9878745415 | SP     |
+| JOAO    | JOAO@IG.COM       | 1112000548 | RJ     |
+| JORGE   | JORGE@GMAIL.COM   | 7778484544 | ES     |
+| CARLOS  | CARLOS@IG.COM     | 9898989778 | RJ     |
+| ANDRE   | ANDRE@GLOBO.COM   | 68976565   | MG     |
+| ANDRE   | ANDRE@GLOBO.COM   | 99656675   | MG     |
+| KARLA   | KARLA@GMAIL.COM   | 33567765   | RJ     |
+| KARLA   | KARLA@GMAIL.COM   | 88668786   | RJ     |
+| KARLA   | KARLA@GMAIL.COM   | 55689654   | RJ     |
+| DANIELE | DANIELE@GMAIL.COM | 88687979   | RJ     |
+| LORENA  | **********        | 88965676   | ES     |
+| ANTONIO | ANTONIO@IG.COM    | 89966809   | PR     |
+| ANTONIO | ANTONIO@UOL.COM   | 88679978   | SP     |
+| ELAINE  | ELAINE@GLOBO.COM  | 99655768   | PR     |
+| CARMEM  | CARMEM@IG.COM     | 89955665   | SP     |
+| ADRIANA | ADRIANA@GMAIL.COM | 77455786   | RJ     |
+| ADRIANA | ADRIANA@GMAIL.COM | 89766554   | RJ     |
+| JOICE   | JOICE@GMAIL.COM   | 77755785   | RJ     |
+| JOICE   | JOICE@GMAIL.COM   | 44522578   | RJ     |
++---------+-------------------+------------+--------+
+
+
+--==========================================================--
+ -- NOME, SEXO, EMAIL, TIPO, NUMERO, BAIRRO, CIDADE, ESTADO --
+--==========================================================--
+
+SELECT 	 CLIENTE.NOME, 
+         CLIENTE.SEXO, 
+         IFNULL(CLIENTE.EMAIL,'*******') AS EMAIL,
+		 IFNULL(TELEFONE.TIPO,'*******') AS TIPO,
+		 TELEFONE.NUMERO,
+		 ENDERECO.BAIRRO, 
+		 ENDERECO.CIDADE, 
+		 ENDERECO.ESTADO
+
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO 
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE;
+
+
+--==========================================================--
+----------------------- CRIANDO UMA VIEW ---------------------
+--==========================================================--
+
+
+CREATE VIEW RELATORIO AS 
+
+SELECT 	
+		CLIENTE.IDCLIENTE,CLIENTE.NOME, CLIENTE.SEXO, CLIENTE.EMAIL,
+		TELEFONE.TIPO, TELEFONE.NUMERO,
+		ENDERECO.BAIRRO, ENDERECO.CIDADE, ENDERECO.ESTADO
+
+FROM CLIENTE
+INNER JOIN TELEFONE
+ON CLIENTE.IDCLIENTE = TELEFONE.ID_CLIENTE
+INNER JOIN ENDERECO 
+ON CLIENTE.IDCLIENTE = ENDERECO.ID_CLIENTE;
+
+
+CREATE TABLE JOGADORES (
+
+	IDJOGADOR INT,
+	NOME VARCHAR(30),
+	ESTADO CHAR(2)
+);
+
+INSERT INTO JOGADORES VALUES(1,'GIULIANO','RS');
+INSERT INTO JOGADORES VALUES(2,'GABIGOL','RJ');
+INSERT INTO JOGADORES VALUES(3,'GANSO','RJ');
+INSERT INTO JOGADORES VALUES(4,'NENÊ','RJ');
+INSERT INTO JOGADORES VALUES(5,'LOVE','SP');
+
+CREATE VIEW V_JOGADORES AS 
+SELECT NOME,ESTADO
+FROM JOGADORES;
+
+SELECT * FROM V_JOGADORES;
+
+DELETE FROM V_JOGADORES
+WHERE NOME = 'GIULIANO';
+
+
+INSERT INTO V_JOGADORES VALUES('GUERRERO','RS');
+
+
+--==========================================================--
+---------------------------- ORDER BY ------------------------
+--==========================================================--
+
+CREATE TABLE ALUNOS(
+
+	NUMERO INT,
+	NOME VARCHAR(30)
+
+);
+
+INSERT INTO ALUNOS VALUES (1,'JOAO');
+INSERT INTO ALUNOS VALUES (2,'MARIA');
+INSERT INTO ALUNOS VALUES (3,'ZOE');
+INSERT INTO ALUNOS VALUES (4,'ANDRE');
+INSERT INTO ALUNOS VALUES (5,'CLARA');
+INSERT INTO ALUNOS VALUES (6,'CLARA');
+INSERT INTO ALUNOS VALUES (7,'MAFRA');
+INSERT INTO ALUNOS VALUES (8,'JANAINA');
+INSERT INTO ALUNOS VALUES (9,'JANAINA');
+INSERT INTO ALUNOS VALUES (10,'MARCELO');
+INSERT INTO ALUNOS VALUES (11,'GIOVANI');
+INSERT INTO ALUNOS VALUES (12,'ANTONIO');
+INSERT INTO ALUNOS VALUES (13,'ANA');
+INSERT INTO ALUNOS VALUES (14,'VIVIANE');
+
+SELECT * FROM ALUNOS 
+ORDER BY NUMERO; /* ORDENA PELA COLUNA NUMERO */ 
+
+SELECT * FROM ALUNOS 
+ORDER BY 1; /* ORDENA PELA COLUNA 1 */ 
+
+SELECT * FROM ALUNOS
+ORDER BY NOME, NUMERO;
+
+SELECT NOME 
+FROM ALUNOS 
+ORDER BY NOME, NUMERO;
+
+SELECT * FROM ALUNOS 
+ORDER BY NUMERO ASC ; /* ORDENA ASCENDENDO */
+
+SELECT * FROM ALUNOS 
+ORDER BY NUMERO DESC ; /* ORDENA DESCENDENDO */
+
+
+--==========================================================--
+-------------------- STORED PRECEDURES -----------------------
+--==========================================================--
+
+DELIMITER $
+
+CREATE PROCEDURE NOME()
+BEGIN 
+
+	QUALQUER PROGRAMAÇÃO;
+
+END
+$
+
+DELIMITER ;
+
+CALL NOME();
+
+--==========================================================--
+-------------------- CRIANDO PRECEDURES ----------------------
+--==========================================================--
+
+CREATE PROCEDURE NOME_EMPRESA()
+BEGIN
+
+	SELECT 'UNIVERSIDADE DOS DADOS' AS EMPRESA;
+
+END
+$
+
+DELIMIER ;
+
+CALL NOME_EMPRESA;
+
+--==========================================================--
+-------------------- CRIANDO PRECEDURES ----------------------
+--==========================================================--
+
+DELIMITER $
+
+CREATE PROCEDURE CONTA()
+BEGIN 
+
+	SELECT 10 + 10 AS CONTA ;
+	
+END
+$
+
+CALL CONTA();
+
+DROP PROCEDURE CONTA;
+
+
+--==========================================================--
+-------------------- CRIANDO PRECEDURES ----------------------
+--==========================================================--
+
+DELIMITER $
+
+CREATE PROCEDURE CONTA(NUMERO1 INT, NUMERO2 INT)
+BEGIN 
+
+	SELECT NUMERO1 + NUMERO2 AS CONTA;
+
+END 
+$
+
+CALL CONTA(100,50);
+CALL CONTA(150,20);
+CALL CONTA(300,400);
+CALL CONTA(250,58);
+CALL CONTA(180,22);
+CALL CONTA(102,55);
+
+
+--==========================================================--
+-------------------- CRIANDO PRECEDURES ----------------------
+--==========================================================--
+
+CREATE DATABASE PROJETO ;
+
+USE PROJETO ; 
+
+CREATE TABLE CURSOS(
+
+	IDCURSO INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30) NOT NULL,
+	HORAS INT(3) NOT NULL,
+	VALOR FLOAT(10,2) NOT NULL
+
+);
+
+INSERT INTO CURSOS VALUES(NULL,'JAVA',30,500.00);
+INSERT INTO CURSOS VALUES(NULL,'FUNDAMENTOS DE BANCO DE DADOS',40,700.00);
+
+--==========================================================--
+-------------------- CRIANDO PRECEDURES ----------------------
+--==========================================================--
+
+DELIMITER #
+
+
+CREATE PROCEDURE CAD_CURSO(P_NOME VARCHAR(30), 
+						   P_HORAS INT(3),
+						   P_VALOR FLOAT(10,2))
+BEGIN 
+	
+	INSERT INTO CURSOS VALUES(NULL,P_NOME,P_HORAS,P_VALOR);
+
+END
+#
+
+DELIMITER ;
+
+CALL CAD_CURSO('BI SQL SERVER',35,3000.00);
+CALL CAD_CURSO('POWERBI',20,1000.00);		
+CALL CAD_CURSO('BI SQL SERVER',30,1200.00);
+
+
+--==========================================================--
+-------------------- CRIANDO PRECEDURES ----------------------
+--==========================================================--
+
+/* CRIAR UMA PROCEDURE PARA CONSULTAR OS CURSOS */
+
+
+CREATE PROCEDURE SELECT_CURSOS()
+BEGIN
+
+SELECT * FROM CURSOS;
+
+
+END
+$
+
+DELIMITER ;
+
+CALL SELECT_CURSOS;
+
+
+--==========================================================--
+-------------------- CRIANDO PRECEDURES ----------------------
+--==========================================================--
+
+/* ARMAZENA VENDAS POR TRIMESTRE */
+
+CREATE TABLE VENDEDORES(
+
+	IDVENDEDOR INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30),
+	SEXO CHAR(1),
+	JANEIRO FLOAT(10,2),
+	FEVEREIRO FLOAT(10,2),
+	MARCO FLOAT(10,2)
+
+);
+
+INSERT INTO VENDEDORES VALUES(NULL,'CARLOS','M',76234.78,88346.87,5756.90);
+INSERT INTO VENDEDORES VALUES(NULL,'MARIA','F',5865.78,6768.87,4467.90);
+INSERT INTO VENDEDORES VALUES(NULL,'ANTONIO','M',78769.78,6685.87,6664.90);
+INSERT INTO VENDEDORES VALUES(NULL,'CLARA','F',5779.78,446886.87,8965.90);
+INSERT INTO VENDEDORES VALUES(NULL,'ANDERSON','M',676545.78,77544.87,578665.90);
+INSERT INTO VENDEDORES VALUES(NULL,'IVONE','F',57789.78,44774.87,68665.90);
+INSERT INTO VENDEDORES VALUES(NULL,'JOAO','M',4785.78,66478.87,6887.90);
+INSERT INTO VENDEDORES VALUES(NULL,'CELIA','F',89667.78,57654.87,5755.90);
+
+
+
+--==========================================================--
+--------------------- MAX, MIN, AVG E SOMA -------------------
+--==========================================================--
+
+/* TRAZ O MÁXIMO DE UMA COLUNA */ 
+
+
+SELECT MAX(FEVEREIRO) AS MAIOR_FEVEREIRO
+FROM VENDEDORES ;
+
++-----------------+
+| MAIOR_FEVEREIRO |
++-----------------+
+|       446886.88 |
++-----------------+
+
+SELECT MIN(FEVEREIRO) AS MENOR_FEVEREIRO
+FROM VENDEDORES ; 
+
++-----------------+
+| MENOR_FEVEREIRO |
++-----------------+
+|         6685.87 |
++-----------------+
+
+SELECT AVG(FEVEREIRO) AS MEDIA_FEVEREIRO
+FROM VENDEDORES  ;
+
++-----------------+
+| MEDIA_FEVEREIRO |
++-----------------+
+|    99392.744873 |
++-----------------+
+
+SELECT 
+	   TRUNCATE(MAX(JANEIRO),2) AS MAX_JAN,
+	   TRUNCATE(MIN(JANEIRO),2) AS MIN_JAN,
+	   TRUNCATE(AVG(JANEIRO),2) AS MED_JAN
+
+FROM VENDEDORES  ;
+
+SELECT SUM(JANEIRO) AS TOTAL_JANEIRO
+FROM VENDEDORES;
+
++---------------+
+| TOTAL_JANEIRO |
++---------------+
+|     995439.21 |
++---------------+
+
+SELECT 	SUM(JANEIRO) AS TOTAL_JANEIRO,
+		SUM(FEVEREIRO) AS TOTAL_FEVEREIRO,
+		SUM(MARCO) AS TOTAL_MARCO
+FROM VENDEDORES;
+
++---------------+-----------------+-------------+
+| TOTAL_JANEIRO | TOTAL_FEVEREIRO | TOTAL_MARCO |
++---------------+-----------------+-------------+
+|     995439.21 |       795141.96 |   685831.17 |
++---------------+-----------------+-------------+
+
+SELECT SEXO, SUM(MARCO) AS TOTAL_MARCO
+FROM VENDEDORES
+GROUP BY SEXO;
+
+
+--==========================================================--
+------------------------- SUBQUERIES -------------------------
+--==========================================================--
+
+/* VENDEDOR QUE VENDEU MENOS EM MARCO E SEU NOME */
+
+SELECT NOME, MARCO
+FROM VENDEDORES
+WHERE MARCO =
+(
+	SELECT MIN(MARCO) 
+	FROM VENDEDORES
+);
+
++-------+---------+
+| NOME  | MARCO   |
++-------+---------+
+| MARIA | 4467.90 |
++-------+---------+
+
+/* VENDEDOR QUE VENDEU MAIS EM MARCO E SEU NOME */
+
+SELECT NOME, MARCO
+FROM VENDEDORES 
+WHERE MARCO = 
+(
+	SELECT MAX(MARCO)
+	FROM VENDEDORES
+);
+
++----------+-----------+
+| NOME     | MARCO     |
++----------+-----------+
+| ANDERSON | 578665.88 |
++----------+-----------+
+
+
+/* VENDEDOR QUE VENDEU MAIS QUE A MEDIA EM MARCO E SEU NOME */
+
+
+SELECT NOME, MARCO
+FROM VENDEDORES
+WHERE MARCO >
+(
+	SELECT AVG(MARCO)
+	FROM VENDEDORES
+);
+
++----------+-----------+
+| NOME     | MARCO     |
++----------+-----------+
+| ANDERSON | 578665.88 |
++----------+-----------+
+
+/* VENDEDOR QUE VENDEU MENOS QUE A MEDIA EM MARCO E SEU NOME */
+
+SELECT NOME, MARCO
+FROM VENDEDORES
+WHERE MARCO <
+(
+	SELECT AVG(MARCO)
+	FROM VENDEDORES
+);
+
++---------+----------+
+| NOME    | MARCO    |
++---------+----------+
+| CARLOS  |  5756.90 |
+| MARIA   |  4467.90 |
+| ANTONIO |  6664.90 |
+| CLARA   |  8965.90 |
+| IVONE   | 68665.90 |
+| JOAO    |  6887.90 |
+| CELIA   |  5755.90 |
++---------+----------+
+
+
+/* VENDEDOR QUE VENDEU MAIS QUE A MEDIA EM FEVEREIRO E SEU NOME */
+
+SELECT NOME, FEVEREIRO
+FROM VENDEDORES 
+WHERE FEVEREIRO >
+(
+	SELECT AVG(FEVEREIRO)
+	FROM VENDEDORES
+);
+
++-------+-----------+
+| NOME  | FEVEREIRO |
++-------+-----------+
+| CLARA | 446886.88 |
++-------+-----------+
+
+/* VENDEDOR QUE VENDEU MENOS QUE A MEDIA EM FEVEREIRO E SEU NOME */
+
+SELECT NOME, FEVEREIRO
+FROM VENDEDORES
+WHERE FEVEREIRO <
+(
+	SELECT AVG(FEVEREIRO)
+	FROM VENDEDORES
+);
+
++----------+-----------+
+| NOME     | FEVEREIRO |
++----------+-----------+
+| CARLOS   |  88346.87 |
+| MARIA    |   6768.87 |
+| ANTONIO  |   6685.87 |
+| ANDERSON |  77544.87 |
+| IVONE    |  44774.87 |
+| JOAO     |  66478.87 |
+| CELIA    |  57654.87 |
++----------+-----------+
+
+
+--=========================================================--
+                  /* OPERAÇÕES COM LINHAS  */
+--=========================================================--
+
+/* PROJETA NOME, JANEIRO, FEVEREIRO, MARCO E A SOMA DELES */
+
+SELECT 	VENDEDORES.NOME,
+		VENDEDORES.JANEIRO,
+		VENDEDORES.FEVEREIRO,
+		VENDEDORES.MARCO,
+(VENDEDORES.JANEIRO+VENDEDORES.FEVEREIRO+VENDEDORES.MARCO) AS TOTAL_ANO 
+
+FROM VENDEDORES;
+
++----------+-----------+-----------+-----------+------------+
+| NOME     | JANEIRO   | FEVEREIRO | MARCO     | TOTAL_ANO  |
++----------+-----------+-----------+-----------+------------+
+| CARLOS   |  76234.78 |  88346.87 |   5756.90 |  170338.55 |
+| MARIA    |   5865.78 |   6768.87 |   4467.90 |   17102.55 |
+| ANTONIO  |  78769.78 |   6685.87 |   6664.90 |   92120.55 |
+| CLARA    |   5779.78 | 446886.88 |   8965.90 |  461632.56 |
+| ANDERSON | 676545.75 |  77544.87 | 578665.88 | 1332756.49 |
+| IVONE    |  57789.78 |  44774.87 |  68665.90 |  171230.55 |
+| JOAO     |   4785.78 |  66478.87 |   6887.90 |   78152.55 |
+| CELIA    |  89667.78 |  57654.87 |   5755.90 |  153078.55 |
++----------+-----------+-----------+-----------+------------+
+
+
+
+/* PROJETA NOME, JANEIRO, FEVEREIRO, MARCO E A MEDIA DELES */
+
+SELECT 	VENDEDORES.NOME, 
+		VENDEDORES.JANEIRO,
+		VENDEDORES.FEVEREIRO, 
+		VENDEDORES.MARCO,
+		TRUNCATE((VENDEDORES.JANEIRO+VENDEDORES.FEVEREIRO+VENDEDORES.MARCO)/3,2) AS MEDIA_TOTAL
+
+FROM VENDEDORES;
+
++----------+-----------+-----------+-----------+-------------+
+| NOME     | JANEIRO   | FEVEREIRO | MARCO     | MEDIA_TOTAL |
++----------+-----------+-----------+-----------+-------------+
+| CARLOS   |  76234.78 |  88346.87 |   5756.90 |    56779.51 |
+| MARIA    |   5865.78 |   6768.87 |   4467.90 |     5700.84 |
+| ANTONIO  |  78769.78 |   6685.87 |   6664.90 |    30706.85 |
+| CLARA    |   5779.78 | 446886.88 |   8965.90 |   153877.51 |
+| ANDERSON | 676545.75 |  77544.87 | 578665.88 |   444252.16 |
+| IVONE    |  57789.78 |  44774.87 |  68665.90 |    57076.85 |
+| JOAO     |   4785.78 |  66478.87 |   6887.90 |    26050.84 |
+| CELIA    |  89667.78 |  57654.87 |   5755.90 |    51026.18 |
++----------+-----------+-----------+-----------+-------------+
+
+
+
+--=========================================================--
+                  /* ALTERANDO TABELAS */
+--=========================================================--
+
+CREATE TABLE TABELA(
+
+	COLUNA1 VARCHAR(30),
+	COLUNA2 VARCHAR(30),
+	COLUNA3 VARCHAR(30)
+
+);
+
+ALTER TABLE TABELA    /* ADICIONANDO A CHAVE PRIMÁRIA NA COLUNA1 */
+ADD PRIMARY KEY (COLUNA1);
+
+ALTER TABLE TABELA
+ADD COLUNA4 VARCHAR(30);
+
+ALTER TABLE TABELA
+MODIFY COLUNA4 VARCHAR(30) NOT NULL;
+
+ALTER TABLE TABELA
+ADD COLUNA5 VARCHAR(30) NOT NULL
+AFTER COLUNA4 ; 
+
+ALTER TABLE TABELA
+MODIFY COLUNA2 DATE NOT NULL;
+
+ALTER TABLE TABELA
+RENAME PESSOAS ;
+
+ALTER TABLE TABELA
+MODIFY COLUNA2 VARCHAR(30) NOT NULL;
+
+--=======================================---
+
+
+CREATE TABLE TABELA_TIME(
+	IDTIME INT PRIMARY KEY AUTO_INCREMENT,
+	NOME_TIME VARCHAR(30),
+	ID_PESSOA VARCHAR(30)
+);
+
+/* INSERINDO CHAVE ESTRANGEIRA */
+
+ALTER TABLE TABELA_TIME
+ADD FOREIGN KEY (ID_PESSOA)
+REFERENCES PESSOA(COLUNA3);
+
+/* VERIFICAR AS CHAVES */
+
+DROP TABLE ENDERECO; 
+DROP TABLE TELEFONE;
+DROP TABLE CLIENTE ;
+
+
+CREATE TABLE CLIENTE(
+
+	IDCLIENTE INT,
+	NOME VARCHAR(30)
+);
+
+CREATE TABLE TELEFONE(
+
+	IDTELEFONE INT,
+	TIPO CHAR(3) NOT NULL,
+	NUMERO VARCHAR(10) NOT NULL,
+	ID_CLIENTE INT
+);
+
+
+
+ALTER TABLE CLIENTE
+ADD CONSTRAINT PK_CLIENTE
+PRIMARY KEY(IDCLIENTE);
+
+ALTER TABLE TELEFONE
+ADD CONSTRAINT FK_CLIENTE_TELEFONE
+FOREIGN KEY(ID_CLIENTE)
+REFERENCES CLIENTE(IDCLIENTE);
+
+
+SHOW CREATE TABLE TELEFONE ;
+
+/* DICIONARIO DE DADOS -CONSTRAINTS*/ 
+
+USE INFORMATION_SCHEMA;
+
+SHOW TABLES;
+
+DESC TABLE_CONSTRAINTS;
+
+CONSTRAINT_NAME
+TABLE_SCHEMA
+TABLE_NAME
+CONSTRAINT_TYPE
+
+SELECT 	CONSTRAINT_SCHEMA AS "BANCO",
+		TABLE_NAME AS "TABELA",
+		CONSTRAINT_NAME AS "NOME REGRA",
+		CONSTRAINT_TYPE AS "TIPO"
+		FROM TABLE_CONSTRAINTS
+		WHERE CONSTRAINT_SCHEMA='COMERCIO';
+
+/* APAGANDO CONSTRAINTS */
+
+
+USE COMERCIO;
+
+ALTER TABLE TELEFONE
+DROP FOREING KEY FK_CLIENTE_TELEFONE;
+
+
+/*                                                                         /*
+SR. JOSÉ QUER MODERNIZAR A SUA OFICINA, E POR ENQUANTO, CADASTRAR OS CARROS 
+QUE ENTRAM PARA REALIZAR SERVIÇOS E OS SEUS RESPECTIVOS DONOS. SR. JOSÉ MENS-
+IONOU QUE CADA CLIENTE POSSUI APENAS UM CARRO.UM CARRO POSSUI UMA MARCA.
+SR.JOSÉ TAMBÉM QUER SABER AS CORES DOS CARROS PARA TER IDÉIA DE QUAL TINTA
+COMPRAR, E INFORMA QUE UM CARRO PODE TER MAIS DE UMA COR. SR.JOSÉ NECESSITA
+ARMAZENAR OS TELEFONES DOS CLIENTE, MAS NÃO QUER QUE ELES SEJAM OBRIGATÓRIOS.
+*/                                                                          /*
+
+/* LEMBRANDO QUE EM UM RELACIONAMENTO 1 X 1 A CHAVE ESTRANGEIRA FICA NA MAIS FRACA.
+   NESTE CASO A BASE DE CLIENTES É MAIS FRACA QUE AS DOS CARRORS, POIS O QUE É IMPORTANTE
+   SÃO OS CARROS, OS CLIENTES SÓ ACOMPANHAM.
+*/
+
+
+CREATE DATABASE OFICINA_JOSE;
+
+USE OFICINA_JOSE;
+
+CREATE TABLE CARROS(
+
+	IDCARROS INT PRIMARY KEY AUTO_INCREMENT,
+	PLACA VARCHAR(30) NOT NULL UNIQUE,
+	ID_MARCA INT,
+	MODELO VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE MARCA(
+
+	IDMARCA INT PRIMARY KEY AUTO_INCREMENT,
+	MARCA VARCHAR(30) NOT NULL UNIQUE
+
+);
+
+CREATE TABLE CORES(
+
+	IDCORES INT PRIMARY KEY AUTO_INCREMENT,
+	CORES VARCHAR(30) NOT NULL UNIQUE
+);
+
+CREATE TABLE CLIENTES(
+
+	IDCLIENTES INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30) NOT NULL,
+	SEXO ENUM('M','F') NOT NULL,
+	CPF VARCHAR(30) NOT NULL,
+    ID_CARROS INT UNIQUE
+);
+
+CREATE TABLE ENDERECO(
+
+	IDENDERECO INT PRIMARY KEY AUTO_INCREMENT,
+	RUA VARCHAR(30) NOT NULL,
+	BAIRRO VARCHAR(30) NOT NULL,
+	CIDADE VARCHAR(30) NOT NULL,
+	ESTADO CHAR(2) NOT NULL,
+	ID_CLIENTES INT
+);
+
+CREATE TABLE TELEFONE(
+
+	IDTELEFONE INT PRIMARY KEY AUTO_INCREMENT,
+	TIPO ENUM('COM','CEL','RES') NOT NULL,
+	NUMERO VARCHAR(30) NOT NULL,
+	ID_CLIENTES INT
+);
+
+CREATE TABLE CARRO_COR(
+	ID_CARROS INT,
+	ID_CORES INT,
+	PRIMARY KEY(ID_CARROS,ID_CORES)
+);
+
+
+--=========================================================--
+       /* CRIAÇÃO DE CONSTRAINTS CHAVES ESTRANGEIRAS */
+--=========================================================--
+
+
+/* ADICIONA CHAVE ESTRANGEIRA À TABELA CLIENTES FK_CLIENTES_CARRO */
+
+ALTER TABLE CLIENTES
+ADD CONSTRAINT FK_CLIENTES_CARRO
+FOREIGN KEY (ID_CARROS)
+REFERENCES CARROS (IDCARROS);
+
+/* ADICIONA CHAVE ESTRANGEIRA À TABELA ENDERECO FK_ENDERECO_CLIENTES */
+
+ALTER TABLE ENDERECO
+ADD CONSTRAINT FK_CLIENTES_ENDERECO
+FOREIGN KEY (ID_CLIENTES)
+REFERENCES CLIENTES (IDCLIENTES);
+
+
+/* ADICIONA CHAVE ESTRANGEIRA À TABELA TELEFONE FK_TELEFONE_CLIENTES */
+
+ALTER TABLE TELEFONE
+ADD CONSTRAINT FK_CLIENTE_TELEFONE
+FOREIGN KEY (ID_CLIENTES)
+REFERENCES CLIENTES (IDCLIENTES);
+
+/* ADICIONA CHAVE ESTRANGEIRA À TABELA CARROS FK_CARROS_MARCA */
+
+ALTER TABLE CARROS
+ADD CONSTRAINT FK_MARCA_CARROS
+FOREIGN KEY (ID_MARCA)
+REFERENCES MARCA (IDMARCA);
+
+/* ADICIONA CHAVE ESTRANGEIRA À TABELA CARROS FK_CARROS_COR */
+
+ALTER TABLE CARRO_COR
+ADD CONSTRAINT FK_CORES
+FOREIGN KEY (ID_CORES)
+REFERENCES CORES(IDCORES);
+
+
+/* ADICIONA CHAVE ESTRANGEIRA À TABELA CARROS FK_COR_CARROS */
+
+ALTER TABLE CARRO_COR
+ADD CONSTRAINT FK_CARROS
+FOREIGN KEY (ID_CARROS)
+REFERENCES CARROS(IDCARROS);
+
+
+--=========================================================--
+     /* CRIAÇÃO DE PROCEDURES PARA INSERÇÃO DE DADOS */
+--=========================================================--
+
+/* TABELA CARROS */
+
+
+DELIMITER $
+
+
+CREATE PROCEDURE CAD_CARROS(P_PLACA VARCHAR(30), 
+	                        P_ID_MARCA INT,
+						    P_MODELO VARCHAR(30))
+						    
+BEGIN 
+	
+	INSERT INTO CARROS VALUES(NULL,P_PLACA,P_ID_MARCA,P_MODELO);
+
+END
+$
+
+DELIMITER ;
+
+CALL CAD_CARROS();
+
+
+
+/* TABELA MARCA */
+
+DELIMITER $
+
+CREATE PROCEDURE CAD_MARCA(P_MARCA VARCHAR(30))
+
+BEGIN 
+
+	INSERT INTO MARCA VALUES (NULL,P_MARCA);
+
+END
+$
+
+CALL CAD_MARCA();
+
+
+
+/* TABELA COR */
+
+
+CREATE PROCEDURE CAD_COR(P_COR VARCHAR(30))
+
+BEGIN
+
+	INSERT INTO COR VALUES(NULL,P_COR);
+
+END
+$
+
+CALL CAD_COR();
+
+
+/* TABELA CLIENTES */
+
+DELIMITER $
+
+CREATE PROCEDURE CAD_CLIENTES(P_NOME VARCHAR(30),
+	                          P_SEXO ENUM('M','F'),
+                              P_CPF VARCHAR(30),
+                              P_ID_CARROS INT)
+BEGIN 
+
+	INSERT INTO CLIENTES VALUES(NULL,P_NOME,P_SEXO,P_CPF,P_ID_CARROS);
+
+
+END
+$
+	                          
+
+CALL CAD_CLIENTES();
+
+
+/* TABELA ENDEREÇO */
+
+DELIMITER $
+
+CREATE PROCEDURE CAD_ENDERECO(P_RUA VARCHAR(30),
+							  P_BAIRRO VARCHAR(30),
+							  P_CIDADE VARCHAR(30),
+							  P_ESTADO CHAR(2),
+							  P_ID_CLIENTES INT)
+
+BEGIN 
+
+	INSERT INTO ENDERECO VALUES(NULL,P_RUA,P_BAIRRO,P_CIDADE,P_ESTADO,P_ID_CLIENTES);
+
+END
+$
+
+CALL CAD_ENDERECO();
+
+
+/* TABELA TELEFONE */
+
+CREATE PROCEDURE CAD_TELEFONE(P_TIPO ENUM('COM','CEL','RES'),
+							  P_NUMERO VARCHAR(30),
+							  P_ID_CLIENTES INT)
+
+BEGIN 
+
+	  INSERT INTO TELEFONE VALUES(NULL,P_TIPO,P_NUMERO,P_ID_CLIENTES);
+
+END
+$
+
+CALL CAD_TELEFONE();
+
+--=================================================================================--
+
+--================================================================================--
+                    /* TRIGGER PARA BECKUP DAS TABELAS DO PROJETO */
+--================================================================================--
+
+
+-- MESMO QUE ALGUM ÍTEM FOR APAGADO EM CADA UMA DAS TABELAS O ÍTEM ESTARÁ NA TABELA DE BECKUP --
+
+--=================================================--
+
+
+/* BACKUP TABELA CARROS */
+
+
+CREATE TABLE BACKUP_CARROS
+(
+
+    ID_CARROS_BKP INT PRIMARY KEY AUTO_INCREMENT,
+	IDCARROS INT,
+	PLACA VARCHAR(30) NOT NULL UNIQUE,
+	ID_MARCA INT,
+	MODELO VARCHAR(30) NOT NULL
+);
+
+
+CREATE TRIGGER BKP_CARROS
+BEFORE DELETE ON CARROS
+FOR EACH ROW
+BEGIN 
+
+	INSERT INTO BKP_USUARIO VALUES(NULL,OLD.PLACA,OLD.ID_MARCA,OLD.MODELO);
+
+END
+$
+
+
+--==================================================--
+
+
+/* BECKUP TABELA MARCA */
+
+
+CREATE TABLE BACKUP_MARCA
+(
+
+    ID_MARCA_BKP INT PRIMARY KEY AUTO_INCREMENT,
+	IDMARCA INT,
+	MARCA VARCHAR(30) NOT NULL UNIQUE
+
+);
+
+CREATE TRIGGER BKP_MARCA
+BEFORE DELETE ON MARCA
+FOR EACH ROW
+BEGIN
+
+	INSERT INTO BKP_MARCA VALUES(NULL,OLD.MARCA);
+
+
+END
+$
+
+--=================================================--
+
+
+/* BECKUP TABELA CORES */
+
+CREATE TABLE BACKUP_CORES
+(
+    ID_CORES_BKP INT PRIMARY KEY AUTO_INCREMENT,
+	IDCORES INT,
+	CORES VARCHAR(30) NOT NULL UNIQUE
+);
+
+
+CREATE TRIGGER BKP_CORES
+BEFORE DELETE ON CORES
+FOR EACH ROW
+BEGIN 
+
+	INSERT INTO BKP_CORES VALUES(NULL,OLD.CORES);
+
+END
+$
+
+--=================================================================--
+
+
+/* BECKUP TABELA CLIENTES */
+
+
+CREATE TABLE BACKUP_CLIENTES
+(
+    ID_CLIENTES_BKP INT PRIMARY KEY AUTO_INCREMENT,
+	IDCLIENTES INT,
+	NOME VARCHAR(30) NOT NULL,
+	SEXO ENUM('M','F') NOT NULL,
+	CPF VARCHAR(30) NOT NULL,
+    ID_CARROS INT UNIQUE
+);
+
+CREATE TRIGGER BKP_CLIENTES
+BEFORE DELETE ON CLIENTES
+FOR EACH ROW
+BEGIN
+
+	INSERT INTO BKP_CLIENTES VALUES(NULL,OLD.NOME,OLD.SEXO,OLD.CPF,OLD.ID_CARROS);
+
+END
+$
+
+--=================================================================--
+
+/* BECKUP TABELA ENDERECO */
+
+CREATE TABLE BACKUP_ENDERECO
+(
+    ID_ENDERECO_BKP INT PRIMARY KEY AUTO_INCREMENT,
+	IDENDERECO INT,
+	RUA VARCHAR(30) NOT NULL,
+	BAIRRO VARCHAR(30) NOT NULL,
+	CIDADE VARCHAR(30) NOT NULL,
+	ESTADO CHAR(2) NOT NULL,
+	ID_CLIENTES INT
+);
+
+CREATE TRIGGER BKP_ENDERECO
+BEFORE DELETE ON ENDERECO
+FOR EACH ROW
+BEGIN 
+
+	INSERT INTO BKP_ENDERECO VALUES(NULL,OLD.RUA,OLD.BAIRRO,OLD.CIDADE,OLD.ESTADO,OLD.ID_CLIENTES);
+	
+END$
+
+--============================================================--
+
+/* BECKUP TABELA TELEFONE */
+
+
+CREATE TABLE BACKUP_TELEFONE
+(
+    ID_TELEFONE_BKP INT PRIMARY KEY AUTO_INCREMENT,
+	IDTELEFONE INT,
+	TIPO ENUM('COM','CEL','RES') NOT NULL,
+	NUMERO VARCHAR(30) NOT NULL,
+	ID_CLIENTES INT
+);
+
+
+CREATE TRIGGER BKP_TELEFONE
+BEFORE DELETE ON TELEFONE
+FOR EACH ROW
+BEGIN 
+
+	INSERT INTO BKP_TELEFONE VALUES(NULL,OLD.TIPO,OLD.NUMERO,OLD.ID_CLIENTES);
+	
+END
+$
+
+--=========================================================================================--
+
+
+--=========================================================--
+               /* TRABALHANDO COM TRIGGERS */
+--=========================================================--
+
+/* ESTRUTURA DE UMA TRIGGER */
+
+CREATE TRIGGER NOME_PRODUTO
+BEFORE/AFTER INSERT/DELETE/UPDATE ON TABELA
+FOR EACH ROW
+BEGIN 
+
+	QUALQUER COMANDO SQL 
+
+END;
+
+
+--==============================================--
+
+
+CREATE DATABASE AULA40;
+
+CREATE TABLE USUARIO
+(
+
+	IDUSUARIO INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30),
+	LOGIN VARCHAR(30),
+    SENHA VARCHAR(100)
+);
+
+/* CRIANDO TABELA DE BECKUP */
+
+-- TODA VEZ QUE APAGAR UMA INFORMAÇÃO O BANCO FAZ UM
+-- BECKUP
+
+CREATE TABLE BKP_USUARIO
+
+(
+	IDBACKUP INT PRIMARY KEY AUTO_INCREMENT,
+	IDUSUARIO INT,
+	NOME VARCHAR(30),
+	LOGIN VARCHAR(30),
+	SENHA VARCHAR(100)
+);
+
+
+
+--==============================================--
+
+/* BECKUP DOS ÍTENS QUE FORAM DELETADOS */
+
+DELIMITADOR $
+
+CREATE TRIGGER BACKUP_USER
+BEFORE DELETE ON USUARIO
+FOR EACH ROW
+BEGIN 
+
+	
+	INSERT INTO BKP_USUARIO VALUES(NULL,OLD.IDUSUARIO,OLD.NOME,OLD.LOGIN,OLD.SENHA);
+
+
+END
+$
+
+	INSERT INTO USUARIO VALUES(NULL,'ANDRADE','ANDRADE2009','HEXACAMPEAO');
+
+
+DELETE FROM USUARIO
+WHERE IDUSUARIO = 1;
+
+
+--=====================================================================--
+                       /* COMUNICAÇÃO ENTRE BANCOS */
+--=====================================================================--
+
+CREATE DATABASE LOJA;
+
+CREATE TABLE PRODUTO
+(
+
+	IDPRODUTO INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30),
+	VALOR FLOAT(10,2)
+);
+
+
+--====================================================--
+
+
+CREATE DATABASE BACKUP;
+
+USE BACKUP;
+
+CREATE TABLE BKP_PRODUTO
+(
+	IDBKP INT PRIMARY KEY AUTO_INCREMENT,
+	IDPRODUTO INT,
+	NOME VARCHAR(30),
+	VALOR FLOAT(10,2)
+);
+
+
+INSERT INTO BACKUP.BKP_PRODUTO VALUES(NULL,1000,'TESTE',0.0);
+
+
+--======================================================--
+
+/* TRIGGER PARA BACKUP ANTES DE INSERIR OS DADOS */
+
+DELIMITER $
+
+CREATE TRIGGER BACKUP_PRODUTO
+BEFORE INSERT ON PRODUTO
+FOR EACH ROW
+BEGIN 
+
+	INSERT INTO BACKUP.BKP_PRODUTO VALUES(NULL,NEW.IDPRODUTO,NEW.NOME,NEW.VALOR);
+
+END
+$
+
+INSERT INTO PRODUTO VALUES(NULL,'LIVRO MODELAGEM',50.00);
+INSERT INTO PRODUTO VALUES(NULL,'LIVRO BI',80.00);
+INSERT INTO PRODUTO VALUES(NULL,'LIVRO ORACLE',70.00);
+INSERT INTO PRODUTO VALUES(NULL,'LIVRO SQL',100.00);
+
+
+
+
+/* TRIGGER PARA BACKUP ANTES DE DELETAR OS DADOS */
+
+CREATE TRIGGER BACKUP_PRODUTO_DEL
+BEFORE DELETE ON PRODUTO
+FOR EACH ROW
+BEGIN 
+
+	INSERT INTO BACKUP.BKP_PRODUTO VALUES(NULL,OLD.IDPRODUTO,OLD.NOME,OLD.VALOR);
+
+END
+$
+
+	Q
+/* TRIGGER PARA BACKUP DEPOIS DE INSERIR OS DADOS */
+
+CREATE TRIGGER BACKUP_PRODUTO
+AFTER INSERT ON PRODUTO
+FOR EACH ROW
+BEGIN 
+
+	INSERT INTO BACKUP.BKP_PRODUTO VALUES(NULL,NEW.IDPRODUTO,NEW.NOME,NEW.VALOR);
+
+END
+$
+
+--==========================================================================--
+
+
+ALTER TABLE BACKUP.BKP_PRODUTO
+ADD EVENTO CHAR(1);
+
+
+CREATE TRIGGER BACKUP_PRODUTO_DEL
+BEFORE DELETE ON PRODUTO
+FOR EACH ROW
+BEGIN 
+
+	INSERT INTO BACKUP.BKP_PRODUTO VALUES(NULL,OLD.IDPRODUTO,OLD.NOME,OLD.VALOR,'D');
+END
+$
+
+DELETE FROM PRODUTO WHERE IDPRODUTO = 3 ; 
+
+SELECT * FROM BACKUP.BKP_PRODUTO_DEL;
+
+
+--======================================================================--
+
+/* QUANDO ACESSOU */
+
+SELECT NOW ();
+
+/* QUEM ACESSOU */
+
+SELECT CURRENT_USER();
+
+--=======================================================--
+
+CREATE DATABASE LOJA;
+
+USE LOJA;
+
+CREATE TABLE PRODUTO
+(
+
+	IDPRODUTO INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30),
+	VALOR_ORIGINAL FLOAT(10,2)
+
+
+);
+
+ALTER TABLE PRODUTO
+CHANGE VALOR_ORIGINAL VALOR FLOAT(10,2);
+
+
+
+INSERT INTO PRODUTO VALUES(NULL,'LIVRO MODELAGEM',50.00);
+INSERT INTO PRODUTO VALUES(NULL,'LIVRO BI',80.00);
+INSERT INTO PRODUTO VALUES(NULL,'LIVRO ORACLE',70.00);
+INSERT INTO PRODUTO VALUES(NULL,'LIVRO SQL',100.00);
+
+
+CREATE DATABASE BACKUP;
+
+USE BACKUP;
+
+CREATE TABLE BKP_PRODUTO
+(
+	IDBKP INT PRIMARY KEY AUTO_INCREMENT,
+	IDPRODUTO INT,
+	NOME VARCHAR(30),
+	VALOR_ORIGINAL FLOAT(10,2),
+	VALOR_ALTERADO FLOAT(10,2),
+	DATA DATETIME,
+	USUARIO VARCHAR(30),
+	EVENTO CHAR(1)
+);
+
+DELIMITER $
+
+CREATE TRIGGER AUDIT_PROD
+AFTER UPDATE ON PRODUTO
+FOR EACH ROW
+BEGIN 
+
+	INSERT INTO BACKUP.BKP_PRODUTO VALUES(NULL,OLD.IDPRODUTO,OLD.NOME,OLD.VALOR,NEW.VALOR,NOW(),CURRENT_USER(),'U');
+
+END
+$
+
+UPDATE PRODUTO
+SET VALOR = 110.00
+WHERE IDPRODUTO = 4;
+
+SELECT * FROM BACKUP.BKP_PRODUTO;
+
+
+
+--=====================================================================--
+                       /* AUTORELACIONAMENTO */
+--=====================================================================--
+
+CREATE TABLE CURSOS
+(
+
+	IDCURSO INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30),
+	HORAS INT,
+	VALOR FLOAT(10,2),
+	ID_PREREQ INT
+);
+
+ALTER TABLE CURSOS
+ADD CONSTRAINT FK_PREREQ
+FOREIGN KEY (ID_PREREQ)
+REFERENCES CURSOS (IDCURSO);
+
+
+INSERT INTO CURSOS VALUES(NULL,'BD RELACIONAL',20,400.00,NULL);
+INSERT INTO CURSOS VALUES(NULL,'BUSINESS INTELLIGENCE',40,800.00,1);
+INSERT INTO CURSOS VALUES(NULL,'RELATORIOS AVANCADOS',20,600.00,2);
+INSERT INTO CURSOS VALUES(NULL,'LOGICA PROGRAM',20,400.00,NULL);
+INSERT INTO CURSOS VALUES(NULL,'RUBY',30,500.00,4);
+
+
+SELECT NOME, VALOR, HORAS, IFNULL(ID_PREREQ,"SEM REQ") AS REQUISITO
+FROM CURSOS;
+
+/* NOME, VALOR, HORAS E O NOME DO PRE REQUISITO DO CURSO */
+
+SELECT C.NOME AS CURSO,C.VALOR AS VALOR, C.HORAS AS  CARGA,IFNULL(C.NOME,"----") AS PREREQ
+FROM CURSOS
+INNER JOIN CURSOS P 
+ON P.IDCURSOS = C.ID_PREREQ;
+
+
+--=====================================================--
+                    /* CURSORES */
+--=====================================================--
+
+/* GERA UM RESUMO RÁPIDO DE UMA TABELA CRIADA */
+
+CREATE DATABASE CURSORES;
+USE CURSORES ;
+
+CREATE TABLE VENDEDORES
+(
+
+	IDVENDEDORE INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(50),
+	JAN INT,
+	FEV INT,
+	MAR INT
+);
+
+INSERT INTO VENDEDORES VALUES(NULL,'MAFRA',12212,5599,9988);
+INSERT INTO VENDEDORES VALUES(NULL,'CLARA',23252,2578,55447);
+INSERT INTO VENDEDORES VALUES(NULL,'JOAO',78454,96874,3325);
+INSERT INTO VENDEDORES VALUES(NULL,'LILIAN',33225,45789,3355);
+INSERT INTO VENDEDORES VALUES(NULL,'ANTONIO',79777,63878,44879);
+INSERT INTO VENDEDORES VALUES(NULL,'GIUBERTO',23213,89698,55569);
+
+
+SELECT NOME,(JAN+FEV+MAR) AS TOTAL, TRUNCATE(((JAN+FEV+MAR)/3),2) AS MEDIA
+FROM VENDEDORES;
+
+
+CREATE TABLE VEND_TOTAL
+(
+
+	NOME VARCHAR(50),
+	JAN INT,
+	FEV INT,
+	MAR INT,
+	TOTAL INT,
+	MEDIA INT
+);
+
+DELIMITER $
+
+CREATE PROCEDURE INSEREDADOS()
+BEGIN
+
+	DECLARE FIM INT DEFAULT 0;
+	DECLARE VAR1,VAR2, VAR3, VTOTAL, VMEDIA INT;
+	DECLARE VNOME VARCHAR(50);
+
+    DECLARE REG CURSOR FOR(
+
+    	SELECT NOME/*1*/, JAN/*2*/, FEV/*3*/, MAR/*4*/
+    	FROM VENDEDORES
+
+    	);
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET FIM = 1;
+
+
+  OPEN REG; /* JOGA DADOS EM MEMORIA RAM */
+
+   	REPEAT
+
+ 	  	FETCH REG INTO VNOME, VAR1, VAR2, VAR3;
+ 	  	IF NOT FIM THEN
+
+ 	  		SET VTOTAL = VAR1 + VAR2 + VAR3;
+ 	  		SET VMEDIA = VTOTAL / 3;
+
+ 	  		INSERT INTO VEND_TOTAL VALUES(VNOME,VAR1,VAR2,VAR3,VTOTAL,VMEDIA);
+
+ 	  	END IF;
+    UNTIL FIM END REPEAT;
+
+
+  CLOSE REG; /* LIMPA A MEMORIA RAM */
+
+END
+$
+
+DELIMITER ;
+
+CALL INSEREDADOS();
+
++----------+-------+-------+-------+--------+-------+
+| NOME     | JAN   | FEV   | MAR   | TOTAL  | MEDIA |
++----------+-------+-------+-------+--------+-------+
+| MAFRA    | 12212 |  5599 |  9988 |  27799 |  9266 |
+| CLARA    | 23252 |  2578 | 55447 |  81277 | 27092 |
+| JOAO     | 78454 | 96874 |  3325 | 178653 | 59551 |
+| LILIAN   | 33225 | 45789 |  3355 |  82369 | 27456 |
+| ANTONIO  | 79777 | 63878 | 44879 | 188534 | 62845 |
+| GIUBERTO | 23213 | 89698 | 55569 | 168480 | 56160 |
+| MAFRA    | 12212 |  5599 |  9988 |  27799 |  9266 |
+| CLARA    | 23252 |  2578 | 55447 |  81277 | 27092 |
+| JOAO     | 78454 | 96874 |  3325 | 178653 | 59551 |
+| LILIAN   | 33225 | 45789 |  3355 |  82369 | 27456 |
+| ANTONIO  | 79777 | 63878 | 44879 | 188534 | 62845 |
+| GIUBERTO | 23213 | 89698 | 55569 | 168480 | 56160 |
++----------+-------+-------+-------+--------+-------+
+
+--=====================================================--
+                    /* 2º e 3º Forma normal */
+--=====================================================--
+
+CREATE DATABASE CONSULTORIO;
+
+USE CONSULTORIO;
+
+CREATE TABLE PACIENTE
+(
+
+	IDPACIENTE INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30),
+	SEXO CHAR(1),
+	EMAIL VARCHAR(30),
+	NASCIMENTO DATE
+);
+
+CREATE TABLE MEDICO
+(
+
+	IDMEDICO INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30),
+	SEXO CHAR(1),
+	ESPECIALIDADE VARCHAR(30),
+    FUNCIONARIO ENUM('S','N')
+);
+
+CREATE TABLE HOSPITAL
+(
+	IDHOSPITAL INT PRIMARY KEY AUTO_INCREMENT,
+	NOME VARCHAR(30),
+	BAIRRO VARCHAR(30),
+	CIDADE VARCHAR(30),
+	ESTADO CHAR(2)
+
+);
+
+CREATE TABLE CONSULTA
+(
+	IDCONSULTA INT PRIMARY KEY AUTO_INCREMENT,
+	ID_PACIENTE INT,
+	ID_MEDICO INT,
+	ID_HOSPITAL INT,
+	DATA DATETIME,
+	DIAGNOSTICO VARCHAR(30)
+
+);
+
+CREATE TABLE INTERNACAO
+(
+	IDINTERNACAO INT PRIMARY KEY AUTO_INCREMENT,
+	ENTRADA DATETIME,
+	QUARTO INT,
+	SAIDA DATETIME,
+	OBSERVACOES VARCHAR(50),
+	ID_CONSULTA INT UNIQUE
+);
+
+--=====================================================--
+                 /* CRIANDO CONSTRAINTS*/
+--=====================================================--
+
+ALTER TABLE CONSULTA
+ADD CONSTRAINT FK_ID_PACIENTE
+FOREIGN KEY (ID_PACIENTE)
+REFERENCES PACIENTE (IDPACIENTE);
+
+ALTER TABLE CONSULTA
+ADD CONSTRAINT FK_ID_MEDICO
+FOREIGN KEY (ID_MEDICO)
+REFERENCES MEDICO (IDMEDICO);
+
+ALTER TABLE CONSULTA
+ADD CONSTRAINT FK_ID_HOSPITAL
+FOREIGN KEY (ID_HOSPITAL)
+REFERENCES HOSPITAL (IDHOSPITAL);
+
+
+ALTER TABLE INTERNACAO
+ADD CONSTRAINT FK_ID_CONSULTA
+FOREIGN KEY (ID_CONSULTA)
+REFERENCES CONSULTA (IDCONSULTA);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
