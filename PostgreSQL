@@ -1124,6 +1124,73 @@ LIMIT 10;
 
 /* QUAL O TOTAL DE GASTO COM SALÁRIO DA EMPRESA */ 
 
+SELECT SUM(SALARIO)
+FROM FUNCIONARIOS;
+
+/* QUAL É O MONTANTE DE SALARIO PAGO POR DEPARTAMENTO */ 
+
+SELECT DEPARTAMENTO, SUM(SALARIO) AS "Total Pago"
+FROM FUNCIONARIOS
+GROUP BY DEPARTAMENTO;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
 
 
 
