@@ -1161,6 +1161,24 @@ FROM FUNCIONARIOS
 GROUP BY DEPARTAMENTO
 ORDER BY 3 DESC;
 
+--========================================--
+
+/* Importando arquivo CSV */
+
+CREATE TABLE MAQUINAS(
+
+   MAQUINA VARCHAR(20),
+   DIA INT,
+   QTD NUMERIC(10,2)
+);
+
+
+COPY MAQUINAS
+FROM 'C:\Projetos\LogMaquinas.csv'
+DELIMITER ','
+CSV HEADER;
+
+SELECT * FROM MAQUINAS;
 
 
 
